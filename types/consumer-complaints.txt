@@ -1,0 +1,179 @@
+class ConsumerComplaints {
+    id: String
+    name: String
+    averageRating: Int
+    createdAt: Int
+    description: String
+    displayType: DisplayType
+    downloadCount: Int
+    hideFromCatalog: Bool
+    hideFromDataJSON: Bool
+    indexUpdatedAt?: Int
+    newBackend: Bool
+    numberOfComments: Int
+    oid: Int
+    provenance: Provenance
+    publicationAppendEnabled: Bool
+    publicationDate: Int
+    publicationGroup: Int
+    publicationStage: PublicationStage
+    rowClass?: String
+    rowsUpdatedAt: Int
+    rowsUpdatedBy: RowsUpdatedBy
+    tableID: Int
+    totalTimesRated: Int
+    viewCount: Int
+    viewLastModified: Int
+    viewType: ViewType
+    grants: List<Grant>
+    metadata: Metadata
+    owner: Owner
+    ratings?: Ratings
+    rights: List<Right>
+    tableAuthor: TableAuthor
+    flags?: List<ConsumerComplaintFlag>
+    moderationStatus?: Bool
+    category?: String
+    tags?: List<String>
+    modifyingViewUid?: ModifyingViewUid
+}
+
+class Grant {
+    inherited: Bool
+    type: GrantType
+    flags: List<GrantFlag>
+}
+
+class Metadata {
+    jsonQuery?: JSONQuery
+    rdfSubject?: RDFSubject
+    rdfClass?: String
+    rowIdentifier?: String
+    availableDisplayTypes: List<AvailableDisplayType>
+    rowLabel?: String
+    renderTypeConfig: RenderTypeConfig
+    richRendererConfigs?: RichRendererConfigs
+    customFields?: CustomFields
+}
+
+class CustomFields {
+    test: Test
+}
+
+class Test {
+    cfpb1: String
+}
+
+class JSONQuery {
+    order?: List<Order>
+    select?: List<Select>
+    group?: List<Group>
+}
+
+class Group {
+    columnFieldName: String
+}
+
+class Order {
+    ascending: Bool
+    columnFieldName: String
+}
+
+class Select {
+    columnFieldName: String
+    aggregate?: String
+}
+
+class RenderTypeConfig {
+    visible: Visible
+}
+
+class Visible {
+    table?: Bool
+    fatrow?: Bool
+}
+
+class RichRendererConfigs {
+    fatRow: FatRow
+}
+
+class FatRow {
+    columns: List<Column>
+}
+
+class Column {
+    styles: Styles
+    rows: List<Row>
+}
+
+class Row {
+    fields: List<Field>
+}
+
+class Field {
+    tableColumnID: Int
+    type: FieldType
+}
+
+class Styles {
+    width: Width
+}
+
+class Owner {
+    id: String
+    displayName: String
+    screenName: String
+    type: OwnerType
+    flags?: List<OwnerFlag>
+    profileImageURLLarge?: String
+    profileImageURLMedium?: String
+    profileImageURLSmall?: String
+}
+
+class Ratings {
+    rating: Int
+}
+
+class TableAuthor {
+    id: ID
+    displayName: Name
+    screenName: Name
+    type: OwnerType
+    flags?: List<OwnerFlag>
+}
+
+enum DisplayType = Fatrow | Table
+
+enum ConsumerComplaintFlag = Default | Restorable | RestorePossibleForType
+
+enum GrantFlag = Public
+
+enum GrantType = Viewer
+
+enum AvailableDisplayType = Fatrow | Page | Table
+
+enum RDFSubject = The0
+
+enum FieldType = ColumnData | ColumnLabel
+
+enum Width = The27 | The30 | The31 | The33 | The40
+
+enum ModifyingViewUid = S6EwH6Mp
+
+enum OwnerFlag = OrganizationMember
+
+enum OwnerType = Interactive
+
+enum Provenance = Official
+
+enum PublicationStage = Published
+
+enum Right = Read
+
+enum RowsUpdatedBy = PjxgVe4M | The54A3Qyun | The9E3M2843 | VvcaFr6G
+
+enum Name = DanMunz | DougTaylor | Ming | ShannonFiles
+
+enum ID = PjxgVe4M | The54A3Qyun | The9E3M2843 | The9EkiH2Hn
+
+enum ViewType = Tabular

@@ -1,0 +1,644 @@
+{
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/ConsumerComplaint"
+    },
+    "definitions": {
+        "Grant": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "inherited": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "viewer"
+                    ],
+                    "title": "type"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "public"
+                        ],
+                        "title": "flag"
+                    }
+                }
+            },
+            "required": [
+                "flags",
+                "inherited",
+                "type"
+            ],
+            "title": "grant"
+        },
+        "Order": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ascending": {
+                    "type": "boolean"
+                },
+                "columnFieldName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ascending",
+                "columnFieldName"
+            ],
+            "title": "order"
+        },
+        "Select": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "columnFieldName": {
+                    "type": "string"
+                },
+                "aggregate": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "columnFieldName"
+            ],
+            "title": "select"
+        },
+        "Group": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "columnFieldName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "columnFieldName"
+            ],
+            "title": "group"
+        },
+        "JSONQuery": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "order": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Order"
+                    }
+                },
+                "select": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Select"
+                    }
+                },
+                "group": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Group"
+                    }
+                }
+            },
+            "required": [],
+            "title": "jsonQuery"
+        },
+        "Visible": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "table": {
+                    "type": "boolean"
+                },
+                "fatrow": {
+                    "type": "boolean"
+                }
+            },
+            "required": [],
+            "title": "visible"
+        },
+        "RenderTypeConfig": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "visible": {
+                    "$ref": "#/definitions/Visible"
+                }
+            },
+            "required": [
+                "visible"
+            ],
+            "title": "renderTypeConfig"
+        },
+        "Styles": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "width": {
+                    "type": "string",
+                    "enum": [
+                        "27%",
+                        "40%",
+                        "30%",
+                        "31%",
+                        "33%"
+                    ],
+                    "title": "width"
+                }
+            },
+            "required": [
+                "width"
+            ],
+            "title": "styles"
+        },
+        "Field": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "tableColumnId": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "columnLabel",
+                        "columnData"
+                    ],
+                    "title": "type"
+                }
+            },
+            "required": [
+                "tableColumnId",
+                "type"
+            ],
+            "title": "field"
+        },
+        "Row": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Field"
+                    }
+                }
+            },
+            "required": [
+                "fields"
+            ],
+            "title": "row"
+        },
+        "Column": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "styles": {
+                    "$ref": "#/definitions/Styles"
+                },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Row"
+                    }
+                }
+            },
+            "required": [
+                "rows",
+                "styles"
+            ],
+            "title": "column"
+        },
+        "FatRow": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Column"
+                    }
+                }
+            },
+            "required": [
+                "columns"
+            ],
+            "title": "fatRow"
+        },
+        "RichRendererConfigs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fatRow": {
+                    "$ref": "#/definitions/FatRow"
+                }
+            },
+            "required": [
+                "fatRow"
+            ],
+            "title": "richRendererConfigs"
+        },
+        "Test": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "CFPB1": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "CFPB1"
+            ],
+            "title": "TEST"
+        },
+        "CustomFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "TEST": {
+                    "$ref": "#/definitions/Test"
+                }
+            },
+            "required": [
+                "TEST"
+            ],
+            "title": "custom_fields"
+        },
+        "Metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "jsonQuery": {
+                    "$ref": "#/definitions/JSONQuery"
+                },
+                "rdfSubject": {
+                    "type": "string",
+                    "enum": [
+                        "0"
+                    ],
+                    "title": "rdfSubject"
+                },
+                "rdfClass": {
+                    "type": "string"
+                },
+                "rowIdentifier": {
+                    "type": "string"
+                },
+                "availableDisplayTypes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "table",
+                            "fatrow",
+                            "page"
+                        ],
+                        "title": "availableDisplayType"
+                    }
+                },
+                "rowLabel": {
+                    "type": "string"
+                },
+                "renderTypeConfig": {
+                    "$ref": "#/definitions/RenderTypeConfig"
+                },
+                "richRendererConfigs": {
+                    "$ref": "#/definitions/RichRendererConfigs"
+                },
+                "custom_fields": {
+                    "$ref": "#/definitions/CustomFields"
+                }
+            },
+            "required": [
+                "availableDisplayTypes",
+                "renderTypeConfig"
+            ],
+            "title": "metadata"
+        },
+        "Owner": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "screenName": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "interactive"
+                    ],
+                    "title": "type"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "organizationMember"
+                        ],
+                        "title": "flag"
+                    }
+                },
+                "profileImageUrlLarge": {
+                    "type": "string"
+                },
+                "profileImageUrlMedium": {
+                    "type": "string"
+                },
+                "profileImageUrlSmall": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "displayName",
+                "id",
+                "screenName",
+                "type"
+            ],
+            "title": "owner"
+        },
+        "Ratings": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "rating": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "rating"
+            ],
+            "title": "ratings"
+        },
+        "TableAuthor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "enum": [
+                        "pjxg-ve4m",
+                        "54a3-qyun",
+                        "9e3m-2843",
+                        "9eki-h2hn"
+                    ],
+                    "title": "id"
+                },
+                "displayName": {
+                    "type": "string",
+                    "enum": [
+                        "Shannon Files",
+                        "ming",
+                        "Dan Munz",
+                        "Doug Taylor"
+                    ],
+                    "title": "Name"
+                },
+                "screenName": {
+                    "type": "string",
+                    "enum": [
+                        "Shannon Files",
+                        "ming",
+                        "Dan Munz",
+                        "Doug Taylor"
+                    ],
+                    "title": "Name"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "interactive"
+                    ],
+                    "title": "type"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "organizationMember"
+                        ],
+                        "title": "flag"
+                    }
+                }
+            },
+            "required": [
+                "displayName",
+                "id",
+                "screenName",
+                "type"
+            ],
+            "title": "tableAuthor"
+        },
+        "ConsumerComplaint": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "averageRating": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "displayType": {
+                    "type": "string",
+                    "enum": [
+                        "table",
+                        "fatrow"
+                    ],
+                    "title": "displayType"
+                },
+                "downloadCount": {
+                    "type": "integer"
+                },
+                "hideFromCatalog": {
+                    "type": "boolean"
+                },
+                "hideFromDataJson": {
+                    "type": "boolean"
+                },
+                "indexUpdatedAt": {
+                    "type": "integer"
+                },
+                "newBackend": {
+                    "type": "boolean"
+                },
+                "numberOfComments": {
+                    "type": "integer"
+                },
+                "oid": {
+                    "type": "integer"
+                },
+                "provenance": {
+                    "type": "string",
+                    "enum": [
+                        "official"
+                    ],
+                    "title": "provenance"
+                },
+                "publicationAppendEnabled": {
+                    "type": "boolean"
+                },
+                "publicationDate": {
+                    "type": "integer"
+                },
+                "publicationGroup": {
+                    "type": "integer"
+                },
+                "publicationStage": {
+                    "type": "string",
+                    "enum": [
+                        "published"
+                    ],
+                    "title": "publicationStage"
+                },
+                "rowClass": {
+                    "type": "string"
+                },
+                "rowsUpdatedAt": {
+                    "type": "integer"
+                },
+                "rowsUpdatedBy": {
+                    "type": "string",
+                    "enum": [
+                        "pjxg-ve4m",
+                        "54a3-qyun",
+                        "9e3m-2843",
+                        "vvca-fr6g"
+                    ],
+                    "title": "rowsUpdatedBy"
+                },
+                "tableId": {
+                    "type": "integer"
+                },
+                "totalTimesRated": {
+                    "type": "integer"
+                },
+                "viewCount": {
+                    "type": "integer"
+                },
+                "viewLastModified": {
+                    "type": "integer"
+                },
+                "viewType": {
+                    "type": "string",
+                    "enum": [
+                        "tabular"
+                    ],
+                    "title": "viewType"
+                },
+                "grants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Grant"
+                    }
+                },
+                "metadata": {
+                    "$ref": "#/definitions/Metadata"
+                },
+                "owner": {
+                    "$ref": "#/definitions/Owner"
+                },
+                "ratings": {
+                    "$ref": "#/definitions/Ratings"
+                },
+                "rights": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "read"
+                        ],
+                        "title": "right"
+                    }
+                },
+                "tableAuthor": {
+                    "$ref": "#/definitions/TableAuthor"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "default",
+                            "restorable",
+                            "restorePossibleForType"
+                        ],
+                        "title": "flag"
+                    }
+                },
+                "moderationStatus": {
+                    "type": "boolean"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "modifyingViewUid": {
+                    "type": "string",
+                    "enum": [
+                        "s6ew-h6mp"
+                    ],
+                    "title": "modifyingViewUid"
+                }
+            },
+            "required": [
+                "averageRating",
+                "createdAt",
+                "description",
+                "displayType",
+                "downloadCount",
+                "grants",
+                "hideFromCatalog",
+                "hideFromDataJson",
+                "id",
+                "metadata",
+                "name",
+                "newBackend",
+                "numberOfComments",
+                "oid",
+                "owner",
+                "provenance",
+                "publicationAppendEnabled",
+                "publicationDate",
+                "publicationGroup",
+                "publicationStage",
+                "rights",
+                "rowsUpdatedAt",
+                "rowsUpdatedBy",
+                "tableAuthor",
+                "tableId",
+                "totalTimesRated",
+                "viewCount",
+                "viewLastModified",
+                "viewType"
+            ],
+            "title": "ConsumerComplaint"
+        }
+    }
+}
