@@ -1,4 +1,4 @@
-# Typed Consumer Complaint Database
+# Consumer Complaint Database – Typed JSON API
 
 > Complaints about financial products and services.
 
