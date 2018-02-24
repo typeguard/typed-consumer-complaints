@@ -13,10 +13,10 @@
 
 extern crate serde_json;
 
-pub type ConsumerComplaints = Vec<ConsumerComplaintElement>;
+pub type ConsumerComplaints = Vec<ConsumerComplaint>;
 
 #[derive(Serialize, Deserialize)]
-pub struct ConsumerComplaintElement {
+pub struct ConsumerComplaint {
     #[serde(rename = "id")]
     id: String,
 

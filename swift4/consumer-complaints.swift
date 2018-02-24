@@ -4,9 +4,9 @@
 
 import Foundation
 
-typealias ConsumerComplaints = [ConsumerComplaintElement]
+typealias ConsumerComplaints = [ConsumerComplaint]
 
-struct ConsumerComplaintElement: Codable {
+struct ConsumerComplaint: Codable {
     let id, name: String
     let averageRating, createdAt: Int
     let description: String
@@ -261,9 +261,9 @@ enum ViewType: String, Codable {
 
 // MARK: Convenience initializers
 
-extension ConsumerComplaintElement {
+extension ConsumerComplaint {
     init(data: Data) throws {
-        self = try JSONDecoder().decode(ConsumerComplaintElement.self, from: data)
+        self = try JSONDecoder().decode(ConsumerComplaint.self, from: data)
     }
 
     init(_ json: String, using encoding: String.Encoding = .utf8) throws {

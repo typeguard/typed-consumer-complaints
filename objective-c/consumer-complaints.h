@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class QTConsumerComplaintElement;
+@class QTConsumerComplaint;
 @class QTDisplayType;
 @class QTConsumerComplaintFlag;
 @class QTGrant;
@@ -175,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (QTViewType *)tabular;
 @end
 
-typedef NSArray<QTConsumerComplaintElement *> QTConsumerComplaints;
+typedef NSArray<QTConsumerComplaint *> QTConsumerComplaints;
 
 #pragma mark - Top-level marshaling functions
 
@@ -186,7 +186,7 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 
 #pragma mark - Object interfaces
 
-@interface QTConsumerComplaintElement : NSObject
+@interface QTConsumerComplaint : NSObject
 @property (nonatomic, copy)             NSString *identifier;
 @property (nonatomic, copy)             NSString *name;
 @property (nonatomic, assign)           NSInteger averageRating;

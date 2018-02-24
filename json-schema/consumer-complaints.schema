@@ -1,7 +1,7 @@
 {
     "type": "array",
     "items": {
-        "$ref": "#/definitions/ConsumerComplaintElement"
+        "$ref": "#/definitions/ConsumerComplaint"
     },
     "definitions": {
         "Grant": {
@@ -441,7 +441,7 @@
             ],
             "title": "tableAuthor"
         },
-        "ConsumerComplaintElement": {
+        "ConsumerComplaint": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -638,7 +638,7 @@
                 "viewLastModified",
                 "viewType"
             ],
-            "title": "ConsumerComplaints"
+            "title": "ConsumerComplaint"
         }
     }
 }

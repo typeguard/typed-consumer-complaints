@@ -15,7 +15,7 @@ module QuickType exposing
     ( ConsumerComplaints
     , consumerComplaintsToString
     , consumerComplaints
-    , ConsumerComplaintElement
+    , ConsumerComplaint
     , Grant
     , Metadata
     , CustomFields
@@ -61,9 +61,9 @@ import Json.Encode as Jenc
 import Dict exposing (Dict, map, toList)
 import Array exposing (Array, map)
 
-type alias ConsumerComplaints = Array ConsumerComplaintElement
+type alias ConsumerComplaints = Array ConsumerComplaint
 
-type alias ConsumerComplaintElement =
+type alias ConsumerComplaint =
     { id : String
     , name : String
     , averageRating : Int
@@ -283,14 +283,14 @@ type ViewType
 -- decoders and encoders
 
 consumerComplaints : Jdec.Decoder ConsumerComplaints
-consumerComplaints = Jdec.array consumerComplaintElement
+consumerComplaints = Jdec.array consumerComplaint
 
 consumerComplaintsToString : ConsumerComplaints -> String
-consumerComplaintsToString r = Jenc.encode 0 (makeArrayEncoder encodeConsumerComplaintElement r)
+consumerComplaintsToString r = Jenc.encode 0 (makeArrayEncoder encodeConsumerComplaint r)
 
-consumerComplaintElement : Jdec.Decoder ConsumerComplaintElement
-consumerComplaintElement =
-    Jpipe.decode ConsumerComplaintElement
+consumerComplaint : Jdec.Decoder ConsumerComplaint
+consumerComplaint =
+    Jpipe.decode ConsumerComplaint
         |> Jpipe.required "id" Jdec.string
         |> Jpipe.required "name" Jdec.string
         |> Jpipe.required "averageRating" Jdec.int
@@ -329,8 +329,8 @@ consumerComplaintElement =
         |> Jpipe.optional "tags" (Jdec.nullable (Jdec.array Jdec.string)) Nothing
         |> Jpipe.optional "modifyingViewUid" (Jdec.nullable modifyingViewUid) Nothing
 
-encodeConsumerComplaintElement : ConsumerComplaintElement -> Jenc.Value
-encodeConsumerComplaintElement x =
+encodeConsumerComplaint : ConsumerComplaint -> Jenc.Value
+encodeConsumerComplaint x =
     Jenc.object
         [ ("id", Jenc.string x.id)
         , ("name", Jenc.string x.name)

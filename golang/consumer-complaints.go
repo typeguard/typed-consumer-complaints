@@ -7,7 +7,7 @@ package main
 
 import "encoding/json"
 
-type ConsumerComplaints []ConsumerComplaintElement
+type ConsumerComplaints []ConsumerComplaint
 
 func UnmarshalConsumerComplaints(data []byte) (ConsumerComplaints, error) {
 	var r ConsumerComplaints
@@ -19,7 +19,7 @@ func (r *ConsumerComplaints) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type ConsumerComplaintElement struct {
+type ConsumerComplaint struct {
 	ID                       string                  `json:"id"`                      
 	Name                     string                  `json:"name"`                    
 	AverageRating            int64                   `json:"averageRating"`           
