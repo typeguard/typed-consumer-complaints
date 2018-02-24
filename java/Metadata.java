@@ -15,19 +15,19 @@ public class Metadata {
     private CustomFields customFields;
 
     @JsonProperty("jsonQuery")
-    public JSONQuery getJsonQuery() { return jsonQuery; }
+    public JSONQuery getJSONQuery() { return jsonQuery; }
     @JsonProperty("jsonQuery")
-    public void setJsonQuery(JSONQuery value) { this.jsonQuery = value; }
+    public void setJSONQuery(JSONQuery value) { this.jsonQuery = value; }
 
     @JsonProperty("rdfSubject")
-    public RDFSubject getRdfSubject() { return rdfSubject; }
+    public RDFSubject getRDFSubject() { return rdfSubject; }
     @JsonProperty("rdfSubject")
-    public void setRdfSubject(RDFSubject value) { this.rdfSubject = value; }
+    public void setRDFSubject(RDFSubject value) { this.rdfSubject = value; }
 
     @JsonProperty("rdfClass")
-    public String getRdfClass() { return rdfClass; }
+    public String getRDFClass() { return rdfClass; }
     @JsonProperty("rdfClass")
-    public void setRdfClass(String value) { this.rdfClass = value; }
+    public void setRDFClass(String value) { this.rdfClass = value; }
 
     @JsonProperty("rowIdentifier")
     public String getRowIdentifier() { return rowIdentifier; }

@@ -11,9 +11,9 @@ public class TableAuthor {
     private OwnerFlag[] flags;
 
     @JsonProperty("id")
-    public ID getId() { return id; }
+    public ID getID() { return id; }
     @JsonProperty("id")
-    public void setId(ID value) { this.id = value; }
+    public void setID(ID value) { this.id = value; }
 
     @JsonProperty("displayName")
     public Name getDisplayName() { return displayName; }

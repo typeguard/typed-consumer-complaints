@@ -1,13 +1,13 @@
 // To parse and unparse this JSON data, add this code to your project and do:
 //
-//    r, err := UnmarshalConsumerComplaints(bytes)
-//    bytes, err = r.Marshal()
+//    consumerComplaints, err := UnmarshalConsumerComplaints(bytes)
+//    bytes, err = consumerComplaints.Marshal()
 
 package main
 
 import "encoding/json"
 
-type ConsumerComplaints []ConsumerComplaint
+type ConsumerComplaints []ConsumerComplaintElement
 
 func UnmarshalConsumerComplaints(data []byte) (ConsumerComplaints, error) {
 	var r ConsumerComplaints
@@ -19,62 +19,62 @@ func (r *ConsumerComplaints) Marshal() ([]byte, error) {
 	return json.Marshal(r)
 }
 
-type ConsumerComplaint struct {
-	ID                       string                  `json:"id"`
-	Name                     string                  `json:"name"`
-	AverageRating            int64                   `json:"averageRating"`
-	CreatedAt                int64                   `json:"createdAt"`
-	Description              string                  `json:"description"`
-	DisplayType              DisplayType             `json:"displayType"`
-	DownloadCount            int64                   `json:"downloadCount"`
-	HideFromCatalog          bool                    `json:"hideFromCatalog"`
-	HideFromDataJSON         bool                    `json:"hideFromDataJson"`
-	IndexUpdatedAt           *int64                  `json:"indexUpdatedAt"`
-	NewBackend               bool                    `json:"newBackend"`
-	NumberOfComments         int64                   `json:"numberOfComments"`
-	OID                      int64                   `json:"oid"`
-	Provenance               Provenance              `json:"provenance"`
+type ConsumerComplaintElement struct {
+	ID                       string                  `json:"id"`                      
+	Name                     string                  `json:"name"`                    
+	AverageRating            int64                   `json:"averageRating"`           
+	CreatedAt                int64                   `json:"createdAt"`               
+	Description              string                  `json:"description"`             
+	DisplayType              DisplayType             `json:"displayType"`             
+	DownloadCount            int64                   `json:"downloadCount"`           
+	HideFromCatalog          bool                    `json:"hideFromCatalog"`         
+	HideFromDataJSON         bool                    `json:"hideFromDataJson"`        
+	IndexUpdatedAt           *int64                  `json:"indexUpdatedAt"`          
+	NewBackend               bool                    `json:"newBackend"`              
+	NumberOfComments         int64                   `json:"numberOfComments"`        
+	OID                      int64                   `json:"oid"`                     
+	Provenance               Provenance              `json:"provenance"`              
 	PublicationAppendEnabled bool                    `json:"publicationAppendEnabled"`
-	PublicationDate          int64                   `json:"publicationDate"`
-	PublicationGroup         int64                   `json:"publicationGroup"`
-	PublicationStage         PublicationStage        `json:"publicationStage"`
-	RowClass                 *string                 `json:"rowClass"`
-	RowsUpdatedAt            int64                   `json:"rowsUpdatedAt"`
-	RowsUpdatedBy            RowsUpdatedBy           `json:"rowsUpdatedBy"`
-	TableID                  int64                   `json:"tableId"`
-	TotalTimesRated          int64                   `json:"totalTimesRated"`
-	ViewCount                int64                   `json:"viewCount"`
-	ViewLastModified         int64                   `json:"viewLastModified"`
-	ViewType                 ViewType                `json:"viewType"`
-	Grants                   []Grant                 `json:"grants"`
-	Metadata                 Metadata                `json:"metadata"`
-	Owner                    Owner                   `json:"owner"`
-	Ratings                  *Ratings                `json:"ratings"`
-	Rights                   []Right                 `json:"rights"`
-	TableAuthor              TableAuthor             `json:"tableAuthor"`
-	Flags                    []ConsumerComplaintFlag `json:"flags"`
-	ModerationStatus         *bool                   `json:"moderationStatus"`
-	Category                 *string                 `json:"category"`
-	Tags                     []string                `json:"tags"`
-	ModifyingViewUid         *ModifyingViewUid       `json:"modifyingViewUid"`
+	PublicationDate          int64                   `json:"publicationDate"`         
+	PublicationGroup         int64                   `json:"publicationGroup"`        
+	PublicationStage         PublicationStage        `json:"publicationStage"`        
+	RowClass                 *string                 `json:"rowClass"`                
+	RowsUpdatedAt            int64                   `json:"rowsUpdatedAt"`           
+	RowsUpdatedBy            RowsUpdatedBy           `json:"rowsUpdatedBy"`           
+	TableID                  int64                   `json:"tableId"`                 
+	TotalTimesRated          int64                   `json:"totalTimesRated"`         
+	ViewCount                int64                   `json:"viewCount"`               
+	ViewLastModified         int64                   `json:"viewLastModified"`        
+	ViewType                 ViewType                `json:"viewType"`                
+	Grants                   []Grant                 `json:"grants"`                  
+	Metadata                 Metadata                `json:"metadata"`                
+	Owner                    Owner                   `json:"owner"`                   
+	Ratings                  *Ratings                `json:"ratings"`                 
+	Rights                   []Right                 `json:"rights"`                  
+	TableAuthor              TableAuthor             `json:"tableAuthor"`             
+	Flags                    []ConsumerComplaintFlag `json:"flags"`                   
+	ModerationStatus         *bool                   `json:"moderationStatus"`        
+	Category                 *string                 `json:"category"`                
+	Tags                     []string                `json:"tags"`                    
+	ModifyingViewUid         *ModifyingViewUid       `json:"modifyingViewUid"`        
 }
 
 type Grant struct {
 	Inherited bool        `json:"inherited"`
-	Type      GrantType   `json:"type"`
-	Flags     []GrantFlag `json:"flags"`
+	Type      GrantType   `json:"type"`     
+	Flags     []GrantFlag `json:"flags"`    
 }
 
 type Metadata struct {
-	JSONQuery             *JSONQuery             `json:"jsonQuery"`
-	RDFSubject            *RDFSubject            `json:"rdfSubject"`
-	RDFClass              *string                `json:"rdfClass"`
-	RowIdentifier         *string                `json:"rowIdentifier"`
+	JSONQuery             *JSONQuery             `json:"jsonQuery"`            
+	RDFSubject            *RDFSubject            `json:"rdfSubject"`           
+	RDFClass              *string                `json:"rdfClass"`             
+	RowIdentifier         *string                `json:"rowIdentifier"`        
 	AvailableDisplayTypes []AvailableDisplayType `json:"availableDisplayTypes"`
-	RowLabel              *string                `json:"rowLabel"`
-	RenderTypeConfig      RenderTypeConfig       `json:"renderTypeConfig"`
-	RichRendererConfigs   *RichRendererConfigs   `json:"richRendererConfigs"`
-	CustomFields          *CustomFields          `json:"custom_fields"`
+	RowLabel              *string                `json:"rowLabel"`             
+	RenderTypeConfig      RenderTypeConfig       `json:"renderTypeConfig"`     
+	RichRendererConfigs   *RichRendererConfigs   `json:"richRendererConfigs"`  
+	CustomFields          *CustomFields          `json:"custom_fields"`        
 }
 
 type CustomFields struct {
@@ -86,9 +86,9 @@ type Test struct {
 }
 
 type JSONQuery struct {
-	Order  []Order  `json:"order"`
+	Order  []Order  `json:"order"` 
 	Select []Select `json:"select"`
-	Group  []Group  `json:"group"`
+	Group  []Group  `json:"group"` 
 }
 
 type Group struct {
@@ -96,13 +96,13 @@ type Group struct {
 }
 
 type Order struct {
-	Ascending       bool   `json:"ascending"`
+	Ascending       bool   `json:"ascending"`      
 	ColumnFieldName string `json:"columnFieldName"`
 }
 
 type Select struct {
 	ColumnFieldName string  `json:"columnFieldName"`
-	Aggregate       *string `json:"aggregate"`
+	Aggregate       *string `json:"aggregate"`      
 }
 
 type RenderTypeConfig struct {
@@ -110,7 +110,7 @@ type RenderTypeConfig struct {
 }
 
 type Visible struct {
-	Table  *bool `json:"table"`
+	Table  *bool `json:"table"` 
 	Fatrow *bool `json:"fatrow"`
 }
 
@@ -124,7 +124,7 @@ type FatRow struct {
 
 type Column struct {
 	Styles Styles `json:"styles"`
-	Rows   []Row  `json:"rows"`
+	Rows   []Row  `json:"rows"`  
 }
 
 type Row struct {
@@ -133,7 +133,7 @@ type Row struct {
 
 type Field struct {
 	TableColumnID int64     `json:"tableColumnId"`
-	Type          FieldType `json:"type"`
+	Type          FieldType `json:"type"`         
 }
 
 type Styles struct {
@@ -141,14 +141,14 @@ type Styles struct {
 }
 
 type Owner struct {
-	ID                    string      `json:"id"`
-	DisplayName           string      `json:"displayName"`
-	ScreenName            string      `json:"screenName"`
-	Type                  OwnerType   `json:"type"`
-	Flags                 []OwnerFlag `json:"flags"`
-	ProfileImageURLLarge  *string     `json:"profileImageUrlLarge"`
+	ID                    string      `json:"id"`                   
+	DisplayName           string      `json:"displayName"`          
+	ScreenName            string      `json:"screenName"`           
+	Type                  OwnerType   `json:"type"`                 
+	Flags                 []OwnerFlag `json:"flags"`                
+	ProfileImageURLLarge  *string     `json:"profileImageUrlLarge"` 
 	ProfileImageURLMedium *string     `json:"profileImageUrlMedium"`
-	ProfileImageURLSmall  *string     `json:"profileImageUrlSmall"`
+	ProfileImageURLSmall  *string     `json:"profileImageUrlSmall"` 
 }
 
 type Ratings struct {
@@ -156,11 +156,11 @@ type Ratings struct {
 }
 
 type TableAuthor struct {
-	ID          ID          `json:"id"`
+	ID          ID          `json:"id"`         
 	DisplayName Name        `json:"displayName"`
-	ScreenName  Name        `json:"screenName"`
-	Type        OwnerType   `json:"type"`
-	Flags       []OwnerFlag `json:"flags"`
+	ScreenName  Name        `json:"screenName"` 
+	Type        OwnerType   `json:"type"`       
+	Flags       []OwnerFlag `json:"flags"`      
 }
 
 type DisplayType string

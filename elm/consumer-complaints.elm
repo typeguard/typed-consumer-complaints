@@ -1,9 +1,9 @@
 -- To decode the JSON data, add this file to your project, run
---
+-- 
 --     elm-package install NoRedInk/elm-decode-pipeline
---
+-- 
 -- add these imports
---
+-- 
 --     import Json.Decode exposing (decodeString)`);
 --     import QuickType exposing (consumerComplaints)
 --
@@ -15,7 +15,7 @@ module QuickType exposing
     ( ConsumerComplaints
     , consumerComplaintsToString
     , consumerComplaints
-    , ConsumerComplaint
+    , ConsumerComplaintElement
     , Grant
     , Metadata
     , CustomFields
@@ -61,9 +61,9 @@ import Json.Encode as Jenc
 import Dict exposing (Dict, map, toList)
 import Array exposing (Array, map)
 
-type alias ConsumerComplaints = Array ConsumerComplaint
+type alias ConsumerComplaints = Array ConsumerComplaintElement
 
-type alias ConsumerComplaint =
+type alias ConsumerComplaintElement =
     { id : String
     , name : String
     , averageRating : Int
@@ -114,7 +114,7 @@ type ConsumerComplaintFlag
 
 type alias Grant =
     { inherited : Bool
-    , purpleType : GrantType
+    , grantType : GrantType
     , flags : Array GrantFlag
     }
 
@@ -200,7 +200,7 @@ type alias Row =
 
 type alias Field =
     { tableColumnID : Int
-    , purpleType : FieldType
+    , fieldType : FieldType
     }
 
 type FieldType
@@ -225,7 +225,7 @@ type alias Owner =
     { id : String
     , displayName : String
     , screenName : String
-    , purpleType : OwnerType
+    , ownerType : OwnerType
     , flags : Maybe (Array OwnerFlag)
     , profileImageURLLarge : Maybe String
     , profileImageURLMedium : Maybe String
@@ -261,7 +261,7 @@ type alias TableAuthor =
     { id : ID
     , displayName : Name
     , screenName : Name
-    , purpleType : OwnerType
+    , tableAuthorType : OwnerType
     , flags : Maybe (Array OwnerFlag)
     }
 
@@ -283,14 +283,14 @@ type ViewType
 -- decoders and encoders
 
 consumerComplaints : Jdec.Decoder ConsumerComplaints
-consumerComplaints = Jdec.array consumerComplaint
+consumerComplaints = Jdec.array consumerComplaintElement
 
 consumerComplaintsToString : ConsumerComplaints -> String
-consumerComplaintsToString r = Jenc.encode 0 (makeArrayEncoder encodeConsumerComplaint r)
+consumerComplaintsToString r = Jenc.encode 0 (makeArrayEncoder encodeConsumerComplaintElement r)
 
-consumerComplaint : Jdec.Decoder ConsumerComplaint
-consumerComplaint =
-    Jpipe.decode ConsumerComplaint
+consumerComplaintElement : Jdec.Decoder ConsumerComplaintElement
+consumerComplaintElement =
+    Jpipe.decode ConsumerComplaintElement
         |> Jpipe.required "id" Jdec.string
         |> Jpipe.required "name" Jdec.string
         |> Jpipe.required "averageRating" Jdec.int
@@ -329,8 +329,8 @@ consumerComplaint =
         |> Jpipe.optional "tags" (Jdec.nullable (Jdec.array Jdec.string)) Nothing
         |> Jpipe.optional "modifyingViewUid" (Jdec.nullable modifyingViewUid) Nothing
 
-encodeConsumerComplaint : ConsumerComplaint -> Jenc.Value
-encodeConsumerComplaint x =
+encodeConsumerComplaintElement : ConsumerComplaintElement -> Jenc.Value
+encodeConsumerComplaintElement x =
     Jenc.object
         [ ("id", Jenc.string x.id)
         , ("name", Jenc.string x.name)
@@ -414,7 +414,7 @@ encodeGrant : Grant -> Jenc.Value
 encodeGrant x =
     Jenc.object
         [ ("inherited", Jenc.bool x.inherited)
-        , ("type", encodeGrantType x.purpleType)
+        , ("type", encodeGrantType x.grantType)
         , ("flags", makeArrayEncoder encodeGrantFlag x.flags)
         ]
 
@@ -655,7 +655,7 @@ encodeField : Field -> Jenc.Value
 encodeField x =
     Jenc.object
         [ ("tableColumnId", Jenc.int x.tableColumnID)
-        , ("type", encodeFieldType x.purpleType)
+        , ("type", encodeFieldType x.fieldType)
         ]
 
 fieldType : Jdec.Decoder FieldType
@@ -736,7 +736,7 @@ encodeOwner x =
         [ ("id", Jenc.string x.id)
         , ("displayName", Jenc.string x.displayName)
         , ("screenName", Jenc.string x.screenName)
-        , ("type", encodeOwnerType x.purpleType)
+        , ("type", encodeOwnerType x.ownerType)
         , ("flags", makeNullableEncoder (makeArrayEncoder encodeOwnerFlag) x.flags)
         , ("profileImageUrlLarge", makeNullableEncoder Jenc.string x.profileImageURLLarge)
         , ("profileImageUrlMedium", makeNullableEncoder Jenc.string x.profileImageURLMedium)
@@ -853,7 +853,7 @@ encodeTableAuthor x =
         [ ("id", encodeID x.id)
         , ("displayName", encodeName x.displayName)
         , ("screenName", encodeName x.screenName)
-        , ("type", encodeOwnerType x.purpleType)
+        , ("type", encodeOwnerType x.tableAuthorType)
         , ("flags", makeNullableEncoder (makeArrayEncoder encodeOwnerFlag) x.flags)
         ]
 

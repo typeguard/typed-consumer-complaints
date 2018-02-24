@@ -8,7 +8,7 @@ static id NSNullify(id _Nullable x) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface QTConsumerComplaint (JSONConversion)
+@interface QTConsumerComplaintElement (JSONConversion)
 + (instancetype)fromJSONDictionary:(NSDictionary *)dict;
 - (NSDictionary *)JSONDictionary;
 @end
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
     };
 }
 
-+ (QTConsumerComplaintFlag *)default1 { return QTConsumerComplaintFlag.values[@"default"]; }
++ (QTConsumerComplaintFlag *)flagDefault { return QTConsumerComplaintFlag.values[@"default"]; }
 + (QTConsumerComplaintFlag *)restorable { return QTConsumerComplaintFlag.values[@"restorable"]; }
 + (QTConsumerComplaintFlag *)restorePossibleForType { return QTConsumerComplaintFlag.values[@"restorePossibleForType"]; }
 
@@ -614,7 +614,7 @@ QTConsumerComplaints *_Nullable QTConsumerComplaintsFromData(NSData *data, NSErr
 {
     @try {
         id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:error];
-        return *error ? nil : map(json, λ(id x, [QTConsumerComplaint fromJSONDictionary:x]));
+        return *error ? nil : map(json, λ(id x, [QTConsumerComplaintElement fromJSONDictionary:x]));
     } @catch (NSException *exception) {
         *error = [NSError errorWithDomain:@"JSONSerialization" code:-1 userInfo:@{ @"exception": exception }];
         return nil;
@@ -644,7 +644,7 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     return data ? [[NSString alloc] initWithData:data encoding:encoding] : nil;
 }
 
-@implementation QTConsumerComplaint
+@implementation QTConsumerComplaintElement
 + (NSDictionary<NSString *, NSString *> *)properties
 {
     static NSDictionary<NSString *, NSString *> *properties;
@@ -691,7 +691,7 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 + (instancetype)fromJSONDictionary:(NSDictionary *)dict
 {
-    return dict ? [[QTConsumerComplaint alloc] initWithJSONDictionary:dict] : nil;
+    return dict ? [[QTConsumerComplaintElement alloc] initWithJSONDictionary:dict] : nil;
 }
 
 - (instancetype)initWithJSONDictionary:(NSDictionary *)dict
@@ -717,15 +717,15 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTConsumerComplaint.properties[key]];
+    [super setValue:value forKey:QTConsumerComplaintElement.properties[key]];
 }
 
 - (NSDictionary *)JSONDictionary
 {
-    id dict = [[self dictionaryWithValuesForKeys:QTConsumerComplaint.properties.allValues] mutableCopy];
+    id dict = [[self dictionaryWithValuesForKeys:QTConsumerComplaintElement.properties.allValues] mutableCopy];
 
-    for (id jsonName in QTConsumerComplaint.properties) {
-        id propertyName = QTConsumerComplaint.properties[jsonName];
+    for (id jsonName in QTConsumerComplaintElement.properties) {
+        id propertyName = QTConsumerComplaintElement.properties[jsonName];
         if (![jsonName isEqualToString:propertyName]) {
             dict[jsonName] = dict[propertyName];
             [dict removeObjectForKey:propertyName];

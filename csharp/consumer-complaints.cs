@@ -2,15 +2,17 @@
 //
 //    using QuickType;
 //
-//    var data = ConsumerComplaints.FromJson(jsonString);
+//    var consumerComplaints = ConsumerComplaints.FromJson(jsonString);
 
 namespace QuickType
 {
     using System;
-    using System.Net;
     using System.Collections.Generic;
+    using System.Net;
 
+    using System.Globalization;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
 
     public partial class ConsumerComplaints
     {
@@ -132,7 +134,7 @@ namespace QuickType
         public bool Inherited { get; set; }
 
         [JsonProperty("type")]
-        public GrantType PurpleType { get; set; }
+        public GrantType Type { get; set; }
 
         [JsonProperty("flags")]
         public GrantFlag[] Flags { get; set; }
@@ -264,7 +266,7 @@ namespace QuickType
         public long TableColumnId { get; set; }
 
         [JsonProperty("type")]
-        public FieldType PurpleType { get; set; }
+        public FieldType Type { get; set; }
     }
 
     public partial class Styles
@@ -285,7 +287,7 @@ namespace QuickType
         public string ScreenName { get; set; }
 
         [JsonProperty("type")]
-        public OwnerType PurpleType { get; set; }
+        public OwnerType Type { get; set; }
 
         [JsonProperty("flags")]
         public OwnerFlag[] Flags { get; set; }
@@ -318,7 +320,7 @@ namespace QuickType
         public Name ScreenName { get; set; }
 
         [JsonProperty("type")]
-        public OwnerType PurpleType { get; set; }
+        public OwnerType Type { get; set; }
 
         [JsonProperty("flags")]
         public OwnerFlag[] Flags { get; set; }
@@ -362,7 +364,7 @@ namespace QuickType
 
     public partial class ConsumerComplaints
     {
-        public static ConsumerComplaints[] FromJson(string json) => JsonConvert.DeserializeObject<ConsumerComplaints[]>(json, Converter.Settings);
+        public static ConsumerComplaints[] FromJson(string json) => JsonConvert.DeserializeObject<ConsumerComplaints[]>(json, QuickType.Converter.Settings);
     }
 
     static class DisplayTypeExtensions
@@ -909,10 +911,10 @@ namespace QuickType
 
     public static class Serialize
     {
-        public static string ToJson(this ConsumerComplaints[] self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this ConsumerComplaints[] self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
     }
 
-    public class Converter: JsonConverter
+    internal class Converter: JsonConverter
     {
         public override bool CanConvert(Type t) => t == typeof(DisplayType) || t == typeof(ConsumerComplaintFlag) || t == typeof(GrantFlag) || t == typeof(GrantType) || t == typeof(AvailableDisplayType) || t == typeof(RdfSubject) || t == typeof(FieldType) || t == typeof(Width) || t == typeof(ModifyingViewUid) || t == typeof(OwnerFlag) || t == typeof(OwnerType) || t == typeof(Provenance) || t == typeof(PublicationStage) || t == typeof(Right) || t == typeof(RowsUpdatedBy) || t == typeof(Name) || t == typeof(Id) || t == typeof(ViewType) || t == typeof(DisplayType?) || t == typeof(ConsumerComplaintFlag?) || t == typeof(GrantFlag?) || t == typeof(GrantType?) || t == typeof(AvailableDisplayType?) || t == typeof(RdfSubject?) || t == typeof(FieldType?) || t == typeof(Width?) || t == typeof(ModifyingViewUid?) || t == typeof(OwnerFlag?) || t == typeof(OwnerType?) || t == typeof(Provenance?) || t == typeof(PublicationStage?) || t == typeof(Right?) || t == typeof(RowsUpdatedBy?) || t == typeof(Name?) || t == typeof(Id?) || t == typeof(ViewType?);
 
@@ -1147,7 +1149,13 @@ namespace QuickType
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             DateParseHandling = DateParseHandling.None,
-            Converters = { new Converter() },
+            Converters = { 
+                new Converter(),
+                new IsoDateTimeConverter()
+                {
+                    DateTimeStyles = DateTimeStyles.AssumeUniversal,
+                },
+            },
         };
     }
 }

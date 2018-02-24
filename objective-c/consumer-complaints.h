@@ -1,11 +1,11 @@
 // To parse this JSON:
-//
+// 
 //   NSError *error;
 //   QTConsumerComplaints *consumerComplaints = QTConsumerComplaintsFromJSON(json, NSUTF8Encoding, &error);
 
 #import <Foundation/Foundation.h>
 
-@class QTConsumerComplaint;
+@class QTConsumerComplaintElement;
 @class QTDisplayType;
 @class QTConsumerComplaintFlag;
 @class QTGrant;
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QTConsumerComplaintFlag : NSObject
 @property (nonatomic, readonly, copy) NSString *value;
 + (instancetype _Nullable)withValue:(NSString *)value;
-+ (QTConsumerComplaintFlag *)default1;
++ (QTConsumerComplaintFlag *)flagDefault;
 + (QTConsumerComplaintFlag *)restorable;
 + (QTConsumerComplaintFlag *)restorePossibleForType;
 @end
@@ -175,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (QTViewType *)tabular;
 @end
 
-typedef NSArray<QTConsumerComplaint *> QTConsumerComplaints;
+typedef NSArray<QTConsumerComplaintElement *> QTConsumerComplaints;
 
 #pragma mark - Top-level marshaling functions
 
@@ -186,7 +186,7 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 
 #pragma mark - Object interfaces
 
-@interface QTConsumerComplaint : NSObject
+@interface QTConsumerComplaintElement : NSObject
 @property (nonatomic, copy)             NSString *identifier;
 @property (nonatomic, copy)             NSString *name;
 @property (nonatomic, assign)           NSInteger averageRating;

@@ -246,7 +246,7 @@ export enum ViewType {
 // and asserts the results of JSON.parse at runtime
 export module Convert {
     export function toConsumerComplaints(json: string): ConsumerComplaints[] {
-        return cast(JSON.parse(json), A(O("ConsumerComplaints")));
+        return cast(JSON.parse(json), a(o("ConsumerComplaints")));
     }
 
     export function consumerComplaintsToJson(value: ConsumerComplaints[]): string {
@@ -287,7 +287,7 @@ export module Convert {
 
     function isValidArray(typ: any, val: any): boolean {
         // val must be an array with no invalid elements
-        return Array.isArray(val) && val.every((element, i) => {
+        return Array.isArray(val) && val.every(element => {
             return isValid(typ, element);
         });
     }
@@ -310,23 +310,23 @@ export module Convert {
         });
     }
 
-    function A(typ: any) {
+    function a(typ: any) {
         return { typ, isArray: true };
     }
 
-    function E(name: string) {
+    function e(name: string) {
         return { name, isEnum: true };
     }
 
-    function U(...typs: any[]) {
+    function u(...typs: any[]) {
         return { typs, isUnion: true };
     }
 
-    function M(typ: any) {
+    function m(typ: any) {
         return { typ, isMap: true };
     }
 
-    function O(className: string) {
+    function o(className: string) {
         return { cls: className, isObject: true };
     }
 
@@ -337,65 +337,65 @@ export module Convert {
             averageRating: 0,
             createdAt: 0,
             description: "",
-            displayType: E("DisplayType"),
+            displayType: e("DisplayType"),
             downloadCount: 0,
             hideFromCatalog: false,
             hideFromDataJson: false,
-            indexUpdatedAt: U(null, 0),
+            indexUpdatedAt: u(null, 0),
             newBackend: false,
             numberOfComments: 0,
             oid: 0,
-            provenance: E("Provenance"),
+            provenance: e("Provenance"),
             publicationAppendEnabled: false,
             publicationDate: 0,
             publicationGroup: 0,
-            publicationStage: E("PublicationStage"),
-            rowClass: U(null, ""),
+            publicationStage: e("PublicationStage"),
+            rowClass: u(null, ""),
             rowsUpdatedAt: 0,
-            rowsUpdatedBy: E("RowsUpdatedBy"),
+            rowsUpdatedBy: e("RowsUpdatedBy"),
             tableId: 0,
             totalTimesRated: 0,
             viewCount: 0,
             viewLastModified: 0,
-            viewType: E("ViewType"),
-            grants: A(O("Grant")),
-            metadata: O("Metadata"),
-            owner: O("Owner"),
-            ratings: U(null, O("Ratings")),
-            rights: A(E("Right")),
-            tableAuthor: O("TableAuthor"),
-            flags: U(null, A(E("ConsumerComplaintFlag"))),
-            moderationStatus: U(null, false),
-            category: U(null, ""),
-            tags: U(null, A("")),
-            modifyingViewUid: U(null, E("ModifyingViewUid")),
+            viewType: e("ViewType"),
+            grants: a(o("Grant")),
+            metadata: o("Metadata"),
+            owner: o("Owner"),
+            ratings: u(null, o("Ratings")),
+            rights: a(e("Right")),
+            tableAuthor: o("TableAuthor"),
+            flags: u(null, a(e("ConsumerComplaintFlag"))),
+            moderationStatus: u(null, false),
+            category: u(null, ""),
+            tags: u(null, a("")),
+            modifyingViewUid: u(null, e("ModifyingViewUid")),
         },
         "Grant": {
             inherited: false,
-            type: E("GrantType"),
-            flags: A(E("GrantFlag")),
+            type: e("GrantType"),
+            flags: a(e("GrantFlag")),
         },
         "Metadata": {
-            jsonQuery: U(null, O("JSONQuery")),
-            rdfSubject: U(null, E("RDFSubject")),
-            rdfClass: U(null, ""),
-            rowIdentifier: U(null, ""),
-            availableDisplayTypes: A(E("AvailableDisplayType")),
-            rowLabel: U(null, ""),
-            renderTypeConfig: O("RenderTypeConfig"),
-            richRendererConfigs: U(null, O("RichRendererConfigs")),
-            custom_fields: U(null, O("CustomFields")),
+            jsonQuery: u(null, o("JSONQuery")),
+            rdfSubject: u(null, e("RDFSubject")),
+            rdfClass: u(null, ""),
+            rowIdentifier: u(null, ""),
+            availableDisplayTypes: a(e("AvailableDisplayType")),
+            rowLabel: u(null, ""),
+            renderTypeConfig: o("RenderTypeConfig"),
+            richRendererConfigs: u(null, o("RichRendererConfigs")),
+            custom_fields: u(null, o("CustomFields")),
         },
         "CustomFields": {
-            TEST: O("Test"),
+            TEST: o("Test"),
         },
         "Test": {
             CFPB1: "",
         },
         "JSONQuery": {
-            order: U(null, A(O("Order"))),
-            select: U(null, A(O("Select"))),
-            group: U(null, A(O("Group"))),
+            order: u(null, a(o("Order"))),
+            select: u(null, a(o("Select"))),
+            group: u(null, a(o("Group"))),
         },
         "Group": {
             columnFieldName: "",
@@ -406,127 +406,127 @@ export module Convert {
         },
         "Select": {
             columnFieldName: "",
-            aggregate: U(null, ""),
+            aggregate: u(null, ""),
         },
         "RenderTypeConfig": {
-            visible: O("Visible"),
+            visible: o("Visible"),
         },
         "Visible": {
-            table: U(null, false),
-            fatrow: U(null, false),
+            table: u(null, false),
+            fatrow: u(null, false),
         },
         "RichRendererConfigs": {
-            fatRow: O("FatRow"),
+            fatRow: o("FatRow"),
         },
         "FatRow": {
-            columns: A(O("Column")),
+            columns: a(o("Column")),
         },
         "Column": {
-            styles: O("Styles"),
-            rows: A(O("Row")),
+            styles: o("Styles"),
+            rows: a(o("Row")),
         },
         "Row": {
-            fields: A(O("Field")),
+            fields: a(o("Field")),
         },
         "Field": {
             tableColumnId: 0,
-            type: E("FieldType"),
+            type: e("FieldType"),
         },
         "Styles": {
-            width: E("Width"),
+            width: e("Width"),
         },
         "Owner": {
             id: "",
             displayName: "",
             screenName: "",
-            type: E("OwnerType"),
-            flags: U(null, A(E("OwnerFlag"))),
-            profileImageUrlLarge: U(null, ""),
-            profileImageUrlMedium: U(null, ""),
-            profileImageUrlSmall: U(null, ""),
+            type: e("OwnerType"),
+            flags: u(null, a(e("OwnerFlag"))),
+            profileImageUrlLarge: u(null, ""),
+            profileImageUrlMedium: u(null, ""),
+            profileImageUrlSmall: u(null, ""),
         },
         "Ratings": {
             rating: 0,
         },
         "TableAuthor": {
-            id: E("ID"),
-            displayName: E("Name"),
-            screenName: E("Name"),
-            type: E("OwnerType"),
-            flags: U(null, A(E("OwnerFlag"))),
+            id: e("ID"),
+            displayName: e("Name"),
+            screenName: e("Name"),
+            type: e("OwnerType"),
+            flags: u(null, a(e("OwnerFlag"))),
         },
         "DisplayType": [
-            DisplayType.Fatrow,
-            DisplayType.Table,
+            "fatrow",
+            "table",
         ],
         "ConsumerComplaintFlag": [
-            ConsumerComplaintFlag.Default,
-            ConsumerComplaintFlag.Restorable,
-            ConsumerComplaintFlag.RestorePossibleForType,
+            "default",
+            "restorable",
+            "restorePossibleForType",
         ],
         "GrantFlag": [
-            GrantFlag.Public,
+            "public",
         ],
         "GrantType": [
-            GrantType.Viewer,
+            "viewer",
         ],
         "AvailableDisplayType": [
-            AvailableDisplayType.Fatrow,
-            AvailableDisplayType.Page,
-            AvailableDisplayType.Table,
+            "fatrow",
+            "page",
+            "table",
         ],
         "RDFSubject": [
-            RDFSubject.The0,
+            "0",
         ],
         "FieldType": [
-            FieldType.ColumnData,
-            FieldType.ColumnLabel,
+            "columnData",
+            "columnLabel",
         ],
         "Width": [
-            Width.The27,
-            Width.The30,
-            Width.The31,
-            Width.The33,
-            Width.The40,
+            "27%",
+            "30%",
+            "31%",
+            "33%",
+            "40%",
         ],
         "ModifyingViewUid": [
-            ModifyingViewUid.S6EwH6Mp,
+            "s6ew-h6mp",
         ],
         "OwnerFlag": [
-            OwnerFlag.OrganizationMember,
+            "organizationMember",
         ],
         "OwnerType": [
-            OwnerType.Interactive,
+            "interactive",
         ],
         "Provenance": [
-            Provenance.Official,
+            "official",
         ],
         "PublicationStage": [
-            PublicationStage.Published,
+            "published",
         ],
         "Right": [
-            Right.Read,
+            "read",
         ],
         "RowsUpdatedBy": [
-            RowsUpdatedBy.PjxgVe4M,
-            RowsUpdatedBy.The54A3Qyun,
-            RowsUpdatedBy.The9E3M2843,
-            RowsUpdatedBy.VvcaFr6G,
+            "pjxg-ve4m",
+            "54a3-qyun",
+            "9e3m-2843",
+            "vvca-fr6g",
         ],
         "Name": [
-            Name.DanMunz,
-            Name.DougTaylor,
-            Name.Ming,
-            Name.ShannonFiles,
+            "Dan Munz",
+            "Doug Taylor",
+            "ming",
+            "Shannon Files",
         ],
         "ID": [
-            ID.PjxgVe4M,
-            ID.The54A3Qyun,
-            ID.The9E3M2843,
-            ID.The9EkiH2Hn,
+            "pjxg-ve4m",
+            "54a3-qyun",
+            "9e3m-2843",
+            "9eki-h2hn",
         ],
         "ViewType": [
-            ViewType.Tabular,
+            "tabular",
         ],
     };
 }

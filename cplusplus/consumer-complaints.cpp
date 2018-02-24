@@ -1,10 +1,10 @@
 //  To parse this JSON data, first install
-//
+// 
 //      Boost     http://www.boost.org
 //      json.hpp  https://github.com/nlohmann/json
-//
+// 
 //  Then include this file, and then do
-//
+// 
 //     ConsumerComplaints data = nlohmann::json::parse(jsonString);
 
 #include "json.hpp"
@@ -152,7 +152,7 @@ namespace quicktype {
 
     enum class ViewType { TABULAR };
 
-    struct ConsumerComplaint {
+    struct ConsumerComplaintElement {
         std::string id;
         std::string name;
         int64_t average_rating;
@@ -192,7 +192,7 @@ namespace quicktype {
         std::unique_ptr<ModifyingViewUid> modifying_view_uid;
     };
 
-    typedef std::vector<struct ConsumerComplaint> ConsumerComplaints;
+    typedef std::vector<struct ConsumerComplaintElement> ConsumerComplaints;
     
     inline json get_untyped(const json &j, const char *property) {
         if (j.find(property) != j.end()) {
@@ -454,7 +454,7 @@ namespace nlohmann {
         _j["flags"] = _x.flags;
     }
 
-    inline void from_json(const json& _j, struct quicktype::ConsumerComplaint& _x) {
+    inline void from_json(const json& _j, struct quicktype::ConsumerComplaintElement& _x) {
         _x.id = _j.at("id").get<std::string>();
         _x.name = _j.at("name").get<std::string>();
         _x.average_rating = _j.at("averageRating").get<int64_t>();
@@ -494,7 +494,7 @@ namespace nlohmann {
         _x.modifying_view_uid = quicktype::get_optional<quicktype::ModifyingViewUid>(_j, "modifyingViewUid");
     }
 
-    inline void to_json(json& _j, const struct quicktype::ConsumerComplaint& _x) {
+    inline void to_json(json& _j, const struct quicktype::ConsumerComplaintElement& _x) {
         _j = json::object();
         _j["id"] = _x.id;
         _j["name"] = _x.name;
@@ -788,5 +788,4 @@ namespace nlohmann {
             default: throw "This should not happen";
         }
     }
-
 }

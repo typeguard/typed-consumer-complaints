@@ -43,9 +43,9 @@ public class ConsumerComplaints {
     private ModifyingViewUid modifyingViewUid;
 
     @JsonProperty("id")
-    public String getId() { return id; }
+    public String getID() { return id; }
     @JsonProperty("id")
-    public void setId(String value) { this.id = value; }
+    public void setID(String value) { this.id = value; }
 
     @JsonProperty("name")
     public String getName() { return name; }
@@ -103,9 +103,9 @@ public class ConsumerComplaints {
     public void setNumberOfComments(long value) { this.numberOfComments = value; }
 
     @JsonProperty("oid")
-    public long getOid() { return oid; }
+    public long getOID() { return oid; }
     @JsonProperty("oid")
-    public void setOid(long value) { this.oid = value; }
+    public void setOID(long value) { this.oid = value; }
 
     @JsonProperty("provenance")
     public Provenance getProvenance() { return provenance; }

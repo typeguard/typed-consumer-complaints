@@ -1,12 +1,12 @@
 // To parse the JSON, add this file to your project and do:
 //
-//   guard let consumerComplaints = try ConsumerComplaints(json) else { ... }
+//   let consumerComplaints = try ConsumerComplaints(json)
 
 import Foundation
 
-typealias ConsumerComplaints = [ConsumerComplaint]
+typealias ConsumerComplaints = [ConsumerComplaintElement]
 
-struct ConsumerComplaint: Codable {
+struct ConsumerComplaintElement: Codable {
     let id, name: String
     let averageRating, createdAt: Int
     let description: String
@@ -52,7 +52,7 @@ enum DisplayType: String, Codable {
 }
 
 enum ConsumerComplaintFlag: String, Codable {
-    case purpleDefault = "default"
+    case flagDefault = "default"
     case restorable = "restorable"
     case restorePossibleForType = "restorePossibleForType"
 }
@@ -64,7 +64,7 @@ struct Grant: Codable {
 }
 
 enum GrantFlag: String, Codable {
-    case purplePublic = "public"
+    case flagPublic = "public"
 }
 
 enum GrantType: String, Codable {
@@ -261,28 +261,28 @@ enum ViewType: String, Codable {
 
 // MARK: Convenience initializers
 
-extension ConsumerComplaint {
+extension ConsumerComplaintElement {
     init(data: Data) throws {
-        self = try JSONDecoder().decode(ConsumerComplaint.self, from: data)
+        self = try JSONDecoder().decode(ConsumerComplaintElement.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -291,23 +291,23 @@ extension Grant {
         self = try JSONDecoder().decode(Grant.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -316,23 +316,23 @@ extension Metadata {
         self = try JSONDecoder().decode(Metadata.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -341,23 +341,23 @@ extension CustomFields {
         self = try JSONDecoder().decode(CustomFields.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -366,23 +366,23 @@ extension Test {
         self = try JSONDecoder().decode(Test.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -391,23 +391,23 @@ extension JSONQuery {
         self = try JSONDecoder().decode(JSONQuery.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -416,23 +416,23 @@ extension Group {
         self = try JSONDecoder().decode(Group.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -441,23 +441,23 @@ extension Order {
         self = try JSONDecoder().decode(Order.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -466,23 +466,23 @@ extension Select {
         self = try JSONDecoder().decode(Select.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -491,23 +491,23 @@ extension RenderTypeConfig {
         self = try JSONDecoder().decode(RenderTypeConfig.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -516,23 +516,23 @@ extension Visible {
         self = try JSONDecoder().decode(Visible.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -541,23 +541,23 @@ extension RichRendererConfigs {
         self = try JSONDecoder().decode(RichRendererConfigs.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -566,23 +566,23 @@ extension FatRow {
         self = try JSONDecoder().decode(FatRow.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -591,23 +591,23 @@ extension Column {
         self = try JSONDecoder().decode(Column.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -616,23 +616,23 @@ extension Row {
         self = try JSONDecoder().decode(Row.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -641,23 +641,23 @@ extension Field {
         self = try JSONDecoder().decode(Field.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -666,23 +666,23 @@ extension Styles {
         self = try JSONDecoder().decode(Styles.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -691,23 +691,23 @@ extension Owner {
         self = try JSONDecoder().decode(Owner.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -716,23 +716,23 @@ extension Ratings {
         self = try JSONDecoder().decode(Ratings.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -741,23 +741,23 @@ extension TableAuthor {
         self = try JSONDecoder().decode(TableAuthor.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }
 
@@ -766,22 +766,22 @@ extension Array where Element == ConsumerComplaints.Element {
         self = try JSONDecoder().decode(ConsumerComplaints.self, from: data)
     }
 
-    init?(_ json: String, using encoding: String.Encoding = .utf8) throws {
-        guard let data = json.data(using: encoding) else { return nil }
+    init(_ json: String, using encoding: String.Encoding = .utf8) throws {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
         try self.init(data: data)
     }
 
-    init?(fromURL url: String) throws {
-        guard let url = URL(string: url) else { return nil }
-        let data = try Data(contentsOf: url)
-        try self.init(data: data)
+    init(fromURL url: URL) throws {
+        try self.init(data: try Data(contentsOf: url))
     }
 
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
     }
 
-    func jsonString() throws -> String? {
-        return String(data: try self.jsonData(), encoding: .utf8)
+    func jsonString(encoding: String.Encoding = .utf8) throws -> String? {
+        return String(data: try self.jsonData(), encoding: encoding)
     }
 }

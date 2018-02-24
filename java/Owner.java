@@ -14,9 +14,9 @@ public class Owner {
     private String profileImageURLSmall;
 
     @JsonProperty("id")
-    public String getId() { return id; }
+    public String getID() { return id; }
     @JsonProperty("id")
-    public void setId(String value) { this.id = value; }
+    public void setID(String value) { this.id = value; }
 
     @JsonProperty("displayName")
     public String getDisplayName() { return displayName; }
