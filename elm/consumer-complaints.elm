@@ -1,9 +1,9 @@
 -- To decode the JSON data, add this file to your project, run
--- 
+--
 --     elm-package install NoRedInk/elm-decode-pipeline
--- 
+--
 -- add these imports
--- 
+--
 --     import Json.Decode exposing (decodeString)`);
 --     import QuickType exposing (consumerComplaints)
 --
@@ -21,9 +21,7 @@ module QuickType exposing
     , CustomFields
     , Test
     , JSONQuery
-    , Group
     , Order
-    , Select
     , RenderTypeConfig
     , Visible
     , RichRendererConfigs
@@ -40,11 +38,9 @@ module QuickType exposing
     , GrantFlag(..)
     , GrantType(..)
     , AvailableDisplayType(..)
-    , RDFSubject(..)
     , FieldType(..)
     , Width(..)
     , ModifyingViewUid(..)
-    , OwnerFlag(..)
     , OwnerType(..)
     , Provenance(..)
     , PublicationStage(..)
@@ -126,7 +122,7 @@ type GrantType
 
 type alias Metadata =
     { jsonQuery : Maybe JSONQuery
-    , rdfSubject : Maybe RDFSubject
+    , rdfSubject : Maybe String
     , rdfClass : Maybe String
     , rowIdentifier : Maybe String
     , availableDisplayTypes : Array AvailableDisplayType
@@ -150,27 +146,13 @@ type alias Test =
     }
 
 type alias JSONQuery =
-    { order : Maybe (Array Order)
-    , select : Maybe (Array Select)
-    , group : Maybe (Array Group)
-    }
-
-type alias Group =
-    { columnFieldName : String
+    { order : Array Order
     }
 
 type alias Order =
     { ascending : Bool
     , columnFieldName : String
     }
-
-type alias Select =
-    { columnFieldName : String
-    , aggregate : Maybe String
-    }
-
-type RDFSubject
-    = The0
 
 type alias RenderTypeConfig =
     { visible : Visible
@@ -226,14 +208,10 @@ type alias Owner =
     , displayName : String
     , screenName : String
     , ownerType : OwnerType
-    , flags : Maybe (Array OwnerFlag)
     , profileImageURLLarge : Maybe String
     , profileImageURLMedium : Maybe String
     , profileImageURLSmall : Maybe String
     }
-
-type OwnerFlag
-    = OrganizationMember
 
 type OwnerType
     = Interactive
@@ -262,7 +240,6 @@ type alias TableAuthor =
     , displayName : Name
     , screenName : Name
     , tableAuthorType : OwnerType
-    , flags : Maybe (Array OwnerFlag)
     }
 
 type Name
@@ -448,7 +425,7 @@ metadata : Jdec.Decoder Metadata
 metadata =
     Jpipe.decode Metadata
         |> Jpipe.optional "jsonQuery" (Jdec.nullable jsonQuery) Nothing
-        |> Jpipe.optional "rdfSubject" (Jdec.nullable rdfSubject) Nothing
+        |> Jpipe.optional "rdfSubject" (Jdec.nullable Jdec.string) Nothing
         |> Jpipe.optional "rdfClass" (Jdec.nullable Jdec.string) Nothing
         |> Jpipe.optional "rowIdentifier" (Jdec.nullable Jdec.string) Nothing
         |> Jpipe.required "availableDisplayTypes" (Jdec.array availableDisplayType)
@@ -461,7 +438,7 @@ encodeMetadata : Metadata -> Jenc.Value
 encodeMetadata x =
     Jenc.object
         [ ("jsonQuery", makeNullableEncoder encodeJSONQuery x.jsonQuery)
-        , ("rdfSubject", makeNullableEncoder encodeRDFSubject x.rdfSubject)
+        , ("rdfSubject", makeNullableEncoder Jenc.string x.rdfSubject)
         , ("rdfClass", makeNullableEncoder Jenc.string x.rdfClass)
         , ("rowIdentifier", makeNullableEncoder Jenc.string x.rowIdentifier)
         , ("availableDisplayTypes", makeArrayEncoder encodeAvailableDisplayType x.availableDisplayTypes)
@@ -513,27 +490,12 @@ encodeTest x =
 jsonQuery : Jdec.Decoder JSONQuery
 jsonQuery =
     Jpipe.decode JSONQuery
-        |> Jpipe.optional "order" (Jdec.nullable (Jdec.array order)) Nothing
-        |> Jpipe.optional "select" (Jdec.nullable (Jdec.array select)) Nothing
-        |> Jpipe.optional "group" (Jdec.nullable (Jdec.array group)) Nothing
+        |> Jpipe.required "order" (Jdec.array order)
 
 encodeJSONQuery : JSONQuery -> Jenc.Value
 encodeJSONQuery x =
     Jenc.object
-        [ ("order", makeNullableEncoder (makeArrayEncoder encodeOrder) x.order)
-        , ("select", makeNullableEncoder (makeArrayEncoder encodeSelect) x.select)
-        , ("group", makeNullableEncoder (makeArrayEncoder encodeGroup) x.group)
-        ]
-
-group : Jdec.Decoder Group
-group =
-    Jpipe.decode Group
-        |> Jpipe.required "columnFieldName" Jdec.string
-
-encodeGroup : Group -> Jenc.Value
-encodeGroup x =
-    Jenc.object
-        [ ("columnFieldName", Jenc.string x.columnFieldName)
+        [ ("order", makeArrayEncoder encodeOrder x.order)
         ]
 
 order : Jdec.Decoder Order
@@ -548,32 +510,6 @@ encodeOrder x =
         [ ("ascending", Jenc.bool x.ascending)
         , ("columnFieldName", Jenc.string x.columnFieldName)
         ]
-
-select : Jdec.Decoder Select
-select =
-    Jpipe.decode Select
-        |> Jpipe.required "columnFieldName" Jdec.string
-        |> Jpipe.optional "aggregate" (Jdec.nullable Jdec.string) Nothing
-
-encodeSelect : Select -> Jenc.Value
-encodeSelect x =
-    Jenc.object
-        [ ("columnFieldName", Jenc.string x.columnFieldName)
-        , ("aggregate", makeNullableEncoder Jenc.string x.aggregate)
-        ]
-
-rdfSubject : Jdec.Decoder RDFSubject
-rdfSubject =
-    Jdec.string
-        |> Jdec.andThen (\str ->
-            case str of
-                "0" -> Jdec.succeed The0
-                somethingElse -> Jdec.fail <| "Invalid RDFSubject: " ++ somethingElse
-        )
-
-encodeRDFSubject : RDFSubject -> Jenc.Value
-encodeRDFSubject x = case x of
-    The0 -> Jenc.string "0"
 
 renderTypeConfig : Jdec.Decoder RenderTypeConfig
 renderTypeConfig =
@@ -725,7 +661,6 @@ owner =
         |> Jpipe.required "displayName" Jdec.string
         |> Jpipe.required "screenName" Jdec.string
         |> Jpipe.required "type" ownerType
-        |> Jpipe.optional "flags" (Jdec.nullable (Jdec.array ownerFlag)) Nothing
         |> Jpipe.optional "profileImageUrlLarge" (Jdec.nullable Jdec.string) Nothing
         |> Jpipe.optional "profileImageUrlMedium" (Jdec.nullable Jdec.string) Nothing
         |> Jpipe.optional "profileImageUrlSmall" (Jdec.nullable Jdec.string) Nothing
@@ -737,24 +672,10 @@ encodeOwner x =
         , ("displayName", Jenc.string x.displayName)
         , ("screenName", Jenc.string x.screenName)
         , ("type", encodeOwnerType x.ownerType)
-        , ("flags", makeNullableEncoder (makeArrayEncoder encodeOwnerFlag) x.flags)
         , ("profileImageUrlLarge", makeNullableEncoder Jenc.string x.profileImageURLLarge)
         , ("profileImageUrlMedium", makeNullableEncoder Jenc.string x.profileImageURLMedium)
         , ("profileImageUrlSmall", makeNullableEncoder Jenc.string x.profileImageURLSmall)
         ]
-
-ownerFlag : Jdec.Decoder OwnerFlag
-ownerFlag =
-    Jdec.string
-        |> Jdec.andThen (\str ->
-            case str of
-                "organizationMember" -> Jdec.succeed OrganizationMember
-                somethingElse -> Jdec.fail <| "Invalid OwnerFlag: " ++ somethingElse
-        )
-
-encodeOwnerFlag : OwnerFlag -> Jenc.Value
-encodeOwnerFlag x = case x of
-    OrganizationMember -> Jenc.string "organizationMember"
 
 ownerType : Jdec.Decoder OwnerType
 ownerType =
@@ -845,7 +766,6 @@ tableAuthor =
         |> Jpipe.required "displayName" name
         |> Jpipe.required "screenName" name
         |> Jpipe.required "type" ownerType
-        |> Jpipe.optional "flags" (Jdec.nullable (Jdec.array ownerFlag)) Nothing
 
 encodeTableAuthor : TableAuthor -> Jenc.Value
 encodeTableAuthor x =
@@ -854,7 +774,6 @@ encodeTableAuthor x =
         , ("displayName", encodeName x.displayName)
         , ("screenName", encodeName x.screenName)
         , ("type", encodeOwnerType x.tableAuthorType)
-        , ("flags", makeNullableEncoder (makeArrayEncoder encodeOwnerFlag) x.flags)
         ]
 
 name : Jdec.Decoder Name

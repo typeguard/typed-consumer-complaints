@@ -3,12 +3,12 @@
 // #[macro_use]
 // extern crate serde_derive;
 // extern crate serde_json;
-// 
-// use generated_module::ConsumerComplaints;
-// 
+//
+// use generated_module::[object Object];
+//
 // fn main() {
 //     let json = r#"{"answer": 42}"#;
-//     let model: ConsumerComplaints = serde_json::from_str(&json).unwrap();
+//     let model: [object Object] = serde_json::from_str(&json).unwrap();
 // }
 
 extern crate serde_json;
@@ -147,7 +147,7 @@ pub struct Metadata {
     json_query: Option<JsonQuery>,
 
     #[serde(rename = "rdfSubject")]
-    rdf_subject: Option<RdfSubject>,
+    rdf_subject: Option<String>,
 
     #[serde(rename = "rdfClass")]
     rdf_class: Option<String>,
@@ -186,19 +186,7 @@ pub struct Test {
 #[derive(Serialize, Deserialize)]
 pub struct JsonQuery {
     #[serde(rename = "order")]
-    order: Option<Vec<Order>>,
-
-    #[serde(rename = "select")]
-    select: Option<Vec<Select>>,
-
-    #[serde(rename = "group")]
-    group: Option<Vec<Group>>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Group {
-    #[serde(rename = "columnFieldName")]
-    column_field_name: String,
+    order: Vec<Order>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -208,15 +196,6 @@ pub struct Order {
 
     #[serde(rename = "columnFieldName")]
     column_field_name: String,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Select {
-    #[serde(rename = "columnFieldName")]
-    column_field_name: String,
-
-    #[serde(rename = "aggregate")]
-    aggregate: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -290,9 +269,6 @@ pub struct Owner {
     #[serde(rename = "type")]
     owner_type: OwnerType,
 
-    #[serde(rename = "flags")]
-    flags: Option<Vec<OwnerFlag>>,
-
     #[serde(rename = "profileImageUrlLarge")]
     profile_image_url_large: Option<String>,
 
@@ -322,9 +298,6 @@ pub struct TableAuthor {
 
     #[serde(rename = "type")]
     table_author_type: OwnerType,
-
-    #[serde(rename = "flags")]
-    flags: Option<Vec<OwnerFlag>>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -373,12 +346,6 @@ pub enum AvailableDisplayType {
 }
 
 #[derive(Serialize, Deserialize)]
-pub enum RdfSubject {
-    #[serde(rename = "0")]
-    The0,
-}
-
-#[derive(Serialize, Deserialize)]
 pub enum FieldType {
     #[serde(rename = "columnData")]
     ColumnData,
@@ -409,12 +376,6 @@ pub enum Width {
 pub enum ModifyingViewUid {
     #[serde(rename = "s6ew-h6mp")]
     S6EwH6Mp,
-}
-
-#[derive(Serialize, Deserialize)]
-pub enum OwnerFlag {
-    #[serde(rename = "organizationMember")]
-    OrganizationMember,
 }
 
 #[derive(Serialize, Deserialize)]

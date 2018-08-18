@@ -1,446 +1,10 @@
 {
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "type": "array",
     "items": {
         "$ref": "#/definitions/ConsumerComplaint"
     },
     "definitions": {
-        "Grant": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "inherited": {
-                    "type": "boolean"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "viewer"
-                    ],
-                    "title": "type"
-                },
-                "flags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "public"
-                        ],
-                        "title": "flag"
-                    }
-                }
-            },
-            "required": [
-                "flags",
-                "inherited",
-                "type"
-            ],
-            "title": "grant"
-        },
-        "Order": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "ascending": {
-                    "type": "boolean"
-                },
-                "columnFieldName": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "ascending",
-                "columnFieldName"
-            ],
-            "title": "order"
-        },
-        "Select": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "columnFieldName": {
-                    "type": "string"
-                },
-                "aggregate": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "columnFieldName"
-            ],
-            "title": "select"
-        },
-        "Group": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "columnFieldName": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "columnFieldName"
-            ],
-            "title": "group"
-        },
-        "JSONQuery": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "order": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Order"
-                    }
-                },
-                "select": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Select"
-                    }
-                },
-                "group": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Group"
-                    }
-                }
-            },
-            "required": [],
-            "title": "jsonQuery"
-        },
-        "Visible": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "table": {
-                    "type": "boolean"
-                },
-                "fatrow": {
-                    "type": "boolean"
-                }
-            },
-            "required": [],
-            "title": "visible"
-        },
-        "RenderTypeConfig": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "visible": {
-                    "$ref": "#/definitions/Visible"
-                }
-            },
-            "required": [
-                "visible"
-            ],
-            "title": "renderTypeConfig"
-        },
-        "Styles": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "width": {
-                    "type": "string",
-                    "enum": [
-                        "27%",
-                        "40%",
-                        "30%",
-                        "31%",
-                        "33%"
-                    ],
-                    "title": "width"
-                }
-            },
-            "required": [
-                "width"
-            ],
-            "title": "styles"
-        },
-        "Field": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "tableColumnId": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "columnLabel",
-                        "columnData"
-                    ],
-                    "title": "type"
-                }
-            },
-            "required": [
-                "tableColumnId",
-                "type"
-            ],
-            "title": "field"
-        },
-        "Row": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "fields": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Field"
-                    }
-                }
-            },
-            "required": [
-                "fields"
-            ],
-            "title": "row"
-        },
-        "Column": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "styles": {
-                    "$ref": "#/definitions/Styles"
-                },
-                "rows": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Row"
-                    }
-                }
-            },
-            "required": [
-                "rows",
-                "styles"
-            ],
-            "title": "column"
-        },
-        "FatRow": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "columns": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Column"
-                    }
-                }
-            },
-            "required": [
-                "columns"
-            ],
-            "title": "fatRow"
-        },
-        "RichRendererConfigs": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "fatRow": {
-                    "$ref": "#/definitions/FatRow"
-                }
-            },
-            "required": [
-                "fatRow"
-            ],
-            "title": "richRendererConfigs"
-        },
-        "Test": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "CFPB1": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "CFPB1"
-            ],
-            "title": "TEST"
-        },
-        "CustomFields": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "TEST": {
-                    "$ref": "#/definitions/Test"
-                }
-            },
-            "required": [
-                "TEST"
-            ],
-            "title": "custom_fields"
-        },
-        "Metadata": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "jsonQuery": {
-                    "$ref": "#/definitions/JSONQuery"
-                },
-                "rdfSubject": {
-                    "type": "string",
-                    "enum": [
-                        "0"
-                    ],
-                    "title": "rdfSubject"
-                },
-                "rdfClass": {
-                    "type": "string"
-                },
-                "rowIdentifier": {
-                    "type": "string"
-                },
-                "availableDisplayTypes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "table",
-                            "fatrow",
-                            "page"
-                        ],
-                        "title": "availableDisplayType"
-                    }
-                },
-                "rowLabel": {
-                    "type": "string"
-                },
-                "renderTypeConfig": {
-                    "$ref": "#/definitions/RenderTypeConfig"
-                },
-                "richRendererConfigs": {
-                    "$ref": "#/definitions/RichRendererConfigs"
-                },
-                "custom_fields": {
-                    "$ref": "#/definitions/CustomFields"
-                }
-            },
-            "required": [
-                "availableDisplayTypes",
-                "renderTypeConfig"
-            ],
-            "title": "metadata"
-        },
-        "Owner": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "displayName": {
-                    "type": "string"
-                },
-                "screenName": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "interactive"
-                    ],
-                    "title": "type"
-                },
-                "flags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "organizationMember"
-                        ],
-                        "title": "flag"
-                    }
-                },
-                "profileImageUrlLarge": {
-                    "type": "string"
-                },
-                "profileImageUrlMedium": {
-                    "type": "string"
-                },
-                "profileImageUrlSmall": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "displayName",
-                "id",
-                "screenName",
-                "type"
-            ],
-            "title": "owner"
-        },
-        "Ratings": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "rating": {
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "rating"
-            ],
-            "title": "ratings"
-        },
-        "TableAuthor": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "id": {
-                    "type": "string",
-                    "enum": [
-                        "pjxg-ve4m",
-                        "54a3-qyun",
-                        "9e3m-2843",
-                        "9eki-h2hn"
-                    ],
-                    "title": "id"
-                },
-                "displayName": {
-                    "type": "string",
-                    "enum": [
-                        "Shannon Files",
-                        "ming",
-                        "Dan Munz",
-                        "Doug Taylor"
-                    ],
-                    "title": "Name"
-                },
-                "screenName": {
-                    "type": "string",
-                    "enum": [
-                        "Shannon Files",
-                        "ming",
-                        "Dan Munz",
-                        "Doug Taylor"
-                    ],
-                    "title": "Name"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "interactive"
-                    ],
-                    "title": "type"
-                },
-                "flags": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "enum": [
-                            "organizationMember"
-                        ],
-                        "title": "flag"
-                    }
-                }
-            },
-            "required": [
-                "displayName",
-                "id",
-                "screenName",
-                "type"
-            ],
-            "title": "tableAuthor"
-        },
         "ConsumerComplaint": {
             "type": "object",
             "additionalProperties": false,
@@ -461,12 +25,7 @@
                     "type": "string"
                 },
                 "displayType": {
-                    "type": "string",
-                    "enum": [
-                        "table",
-                        "fatrow"
-                    ],
-                    "title": "displayType"
+                    "$ref": "#/definitions/DisplayType"
                 },
                 "downloadCount": {
                     "type": "integer"
@@ -490,11 +49,7 @@
                     "type": "integer"
                 },
                 "provenance": {
-                    "type": "string",
-                    "enum": [
-                        "official"
-                    ],
-                    "title": "provenance"
+                    "$ref": "#/definitions/Provenance"
                 },
                 "publicationAppendEnabled": {
                     "type": "boolean"
@@ -506,11 +61,7 @@
                     "type": "integer"
                 },
                 "publicationStage": {
-                    "type": "string",
-                    "enum": [
-                        "published"
-                    ],
-                    "title": "publicationStage"
+                    "$ref": "#/definitions/PublicationStage"
                 },
                 "rowClass": {
                     "type": "string"
@@ -519,14 +70,7 @@
                     "type": "integer"
                 },
                 "rowsUpdatedBy": {
-                    "type": "string",
-                    "enum": [
-                        "pjxg-ve4m",
-                        "54a3-qyun",
-                        "9e3m-2843",
-                        "vvca-fr6g"
-                    ],
-                    "title": "rowsUpdatedBy"
+                    "$ref": "#/definitions/RowsUpdatedBy"
                 },
                 "tableId": {
                     "type": "integer"
@@ -541,11 +85,7 @@
                     "type": "integer"
                 },
                 "viewType": {
-                    "type": "string",
-                    "enum": [
-                        "tabular"
-                    ],
-                    "title": "viewType"
+                    "$ref": "#/definitions/ViewType"
                 },
                 "grants": {
                     "type": "array",
@@ -565,11 +105,7 @@
                 "rights": {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "enum": [
-                            "read"
-                        ],
-                        "title": "right"
+                        "$ref": "#/definitions/Right"
                     }
                 },
                 "tableAuthor": {
@@ -578,13 +114,7 @@
                 "flags": {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "enum": [
-                            "default",
-                            "restorable",
-                            "restorePossibleForType"
-                        ],
-                        "title": "flag"
+                        "$ref": "#/definitions/ConsumerComplaintFlag"
                     }
                 },
                 "moderationStatus": {
@@ -600,11 +130,7 @@
                     }
                 },
                 "modifyingViewUid": {
-                    "type": "string",
-                    "enum": [
-                        "s6ew-h6mp"
-                    ],
-                    "title": "modifyingViewUid"
+                    "$ref": "#/definitions/ModifyingViewUid"
                 }
             },
             "required": [
@@ -639,6 +165,457 @@
                 "viewType"
             ],
             "title": "ConsumerComplaint"
+        },
+        "Grant": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "inherited": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "$ref": "#/definitions/GrantType"
+                },
+                "flags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GrantFlag"
+                    }
+                }
+            },
+            "required": [
+                "flags",
+                "inherited",
+                "type"
+            ],
+            "title": "Grant"
+        },
+        "Metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "jsonQuery": {
+                    "$ref": "#/definitions/JSONQuery"
+                },
+                "rdfSubject": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "rdfClass": {
+                    "type": "string"
+                },
+                "rowIdentifier": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "availableDisplayTypes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AvailableDisplayType"
+                    }
+                },
+                "rowLabel": {
+                    "type": "string"
+                },
+                "renderTypeConfig": {
+                    "$ref": "#/definitions/RenderTypeConfig"
+                },
+                "richRendererConfigs": {
+                    "$ref": "#/definitions/RichRendererConfigs"
+                },
+                "custom_fields": {
+                    "$ref": "#/definitions/CustomFields"
+                }
+            },
+            "required": [
+                "availableDisplayTypes",
+                "renderTypeConfig"
+            ],
+            "title": "Metadata"
+        },
+        "CustomFields": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "TEST": {
+                    "$ref": "#/definitions/Test"
+                }
+            },
+            "required": [
+                "TEST"
+            ],
+            "title": "CustomFields"
+        },
+        "Test": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "CFPB1": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "CFPB1"
+            ],
+            "title": "Test"
+        },
+        "JSONQuery": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "order": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Order"
+                    }
+                }
+            },
+            "required": [
+                "order"
+            ],
+            "title": "JSONQuery"
+        },
+        "Order": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ascending": {
+                    "type": "boolean"
+                },
+                "columnFieldName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ascending",
+                "columnFieldName"
+            ],
+            "title": "Order"
+        },
+        "RenderTypeConfig": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "visible": {
+                    "$ref": "#/definitions/Visible"
+                }
+            },
+            "required": [
+                "visible"
+            ],
+            "title": "RenderTypeConfig"
+        },
+        "Visible": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "table": {
+                    "type": "boolean"
+                },
+                "fatrow": {
+                    "type": "boolean"
+                }
+            },
+            "required": [],
+            "title": "Visible"
+        },
+        "RichRendererConfigs": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fatRow": {
+                    "$ref": "#/definitions/FatRow"
+                }
+            },
+            "required": [
+                "fatRow"
+            ],
+            "title": "RichRendererConfigs"
+        },
+        "FatRow": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Column"
+                    }
+                }
+            },
+            "required": [
+                "columns"
+            ],
+            "title": "FatRow"
+        },
+        "Column": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "styles": {
+                    "$ref": "#/definitions/Styles"
+                },
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Row"
+                    }
+                }
+            },
+            "required": [
+                "rows",
+                "styles"
+            ],
+            "title": "Column"
+        },
+        "Row": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Field"
+                    }
+                }
+            },
+            "required": [
+                "fields"
+            ],
+            "title": "Row"
+        },
+        "Field": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "tableColumnId": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/FieldType"
+                }
+            },
+            "required": [
+                "tableColumnId",
+                "type"
+            ],
+            "title": "Field"
+        },
+        "Styles": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "width": {
+                    "$ref": "#/definitions/Width"
+                }
+            },
+            "required": [
+                "width"
+            ],
+            "title": "Styles"
+        },
+        "Owner": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "screenName": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/OwnerType"
+                },
+                "profileImageUrlLarge": {
+                    "type": "string"
+                },
+                "profileImageUrlMedium": {
+                    "type": "string"
+                },
+                "profileImageUrlSmall": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "displayName",
+                "id",
+                "screenName",
+                "type"
+            ],
+            "title": "Owner"
+        },
+        "Ratings": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "rating": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "rating"
+            ],
+            "title": "Ratings"
+        },
+        "TableAuthor": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/definitions/ID"
+                },
+                "displayName": {
+                    "$ref": "#/definitions/Name"
+                },
+                "screenName": {
+                    "$ref": "#/definitions/Name"
+                },
+                "type": {
+                    "$ref": "#/definitions/OwnerType"
+                }
+            },
+            "required": [
+                "displayName",
+                "id",
+                "screenName",
+                "type"
+            ],
+            "title": "TableAuthor"
+        },
+        "DisplayType": {
+            "type": "string",
+            "enum": [
+                "table",
+                "fatrow"
+            ],
+            "title": "DisplayType"
+        },
+        "ConsumerComplaintFlag": {
+            "type": "string",
+            "enum": [
+                "default",
+                "restorable",
+                "restorePossibleForType"
+            ],
+            "title": "ConsumerComplaintFlag"
+        },
+        "GrantFlag": {
+            "type": "string",
+            "enum": [
+                "public"
+            ],
+            "title": "GrantFlag"
+        },
+        "GrantType": {
+            "type": "string",
+            "enum": [
+                "viewer"
+            ],
+            "title": "GrantType"
+        },
+        "AvailableDisplayType": {
+            "type": "string",
+            "enum": [
+                "table",
+                "fatrow",
+                "page"
+            ],
+            "title": "AvailableDisplayType"
+        },
+        "FieldType": {
+            "type": "string",
+            "enum": [
+                "columnLabel",
+                "columnData"
+            ],
+            "title": "FieldType"
+        },
+        "Width": {
+            "type": "string",
+            "enum": [
+                "27%",
+                "40%",
+                "30%",
+                "31%",
+                "33%"
+            ],
+            "title": "Width"
+        },
+        "ModifyingViewUid": {
+            "type": "string",
+            "enum": [
+                "s6ew-h6mp"
+            ],
+            "title": "ModifyingViewUid"
+        },
+        "OwnerType": {
+            "type": "string",
+            "enum": [
+                "interactive"
+            ],
+            "title": "OwnerType"
+        },
+        "Provenance": {
+            "type": "string",
+            "enum": [
+                "official"
+            ],
+            "title": "Provenance"
+        },
+        "PublicationStage": {
+            "type": "string",
+            "enum": [
+                "published"
+            ],
+            "title": "PublicationStage"
+        },
+        "Right": {
+            "type": "string",
+            "enum": [
+                "read"
+            ],
+            "title": "Right"
+        },
+        "RowsUpdatedBy": {
+            "type": "string",
+            "enum": [
+                "pjxg-ve4m",
+                "54a3-qyun",
+                "9e3m-2843",
+                "vvca-fr6g"
+            ],
+            "title": "RowsUpdatedBy"
+        },
+        "Name": {
+            "type": "string",
+            "enum": [
+                "Shannon Files",
+                "ming",
+                "Dan Munz",
+                "Doug Taylor"
+            ],
+            "title": "Name"
+        },
+        "ID": {
+            "type": "string",
+            "enum": [
+                "pjxg-ve4m",
+                "54a3-qyun",
+                "9e3m-2843",
+                "9eki-h2hn"
+            ],
+            "title": "ID"
+        },
+        "ViewType": {
+            "type": "string",
+            "enum": [
+                "tabular"
+            ],
+            "title": "ViewType"
         }
     }
 }

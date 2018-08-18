@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.*;
 
 public class Metadata {
     private JSONQuery jsonQuery;
-    private RDFSubject rdfSubject;
+    private String rdfSubject;
     private String rdfClass;
     private String rowIdentifier;
     private AvailableDisplayType[] availableDisplayTypes;
@@ -20,9 +20,9 @@ public class Metadata {
     public void setJSONQuery(JSONQuery value) { this.jsonQuery = value; }
 
     @JsonProperty("rdfSubject")
-    public RDFSubject getRDFSubject() { return rdfSubject; }
+    public String getRDFSubject() { return rdfSubject; }
     @JsonProperty("rdfSubject")
-    public void setRDFSubject(RDFSubject value) { this.rdfSubject = value; }
+    public void setRDFSubject(String value) { this.rdfSubject = value; }
 
     @JsonProperty("rdfClass")
     public String getRDFClass() { return rdfClass; }

@@ -8,7 +8,6 @@ public class TableAuthor {
     private Name displayName;
     private Name screenName;
     private OwnerType type;
-    private OwnerFlag[] flags;
 
     @JsonProperty("id")
     public ID getID() { return id; }
@@ -29,9 +28,4 @@ public class TableAuthor {
     public OwnerType getType() { return type; }
     @JsonProperty("type")
     public void setType(OwnerType value) { this.type = value; }
-
-    @JsonProperty("flags")
-    public OwnerFlag[] getFlags() { return flags; }
-    @JsonProperty("flags")
-    public void setFlags(OwnerFlag[] value) { this.flags = value; }
 }

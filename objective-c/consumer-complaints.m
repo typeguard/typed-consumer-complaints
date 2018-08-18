@@ -38,17 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)JSONDictionary;
 @end
 
-@interface QTGroup (JSONConversion)
-+ (instancetype)fromJSONDictionary:(NSDictionary *)dict;
-- (NSDictionary *)JSONDictionary;
-@end
-
 @interface QTOrder (JSONConversion)
-+ (instancetype)fromJSONDictionary:(NSDictionary *)dict;
-- (NSDictionary *)JSONDictionary;
-@end
-
-@interface QTSelect (JSONConversion)
 + (instancetype)fromJSONDictionary:(NSDictionary *)dict;
 - (NSDictionary *)JSONDictionary;
 @end
@@ -243,31 +233,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)hash { return _value.hash; }
 @end
 
-@implementation QTRDFSubject
-+ (NSDictionary<NSString *, QTRDFSubject *> *)values
-{
-    static NSDictionary<NSString *, QTRDFSubject *> *values;
-    return values = values ? values : @{
-        @"0": [[QTRDFSubject alloc] initWithValue:@"0"],
-    };
-}
-
-+ (QTRDFSubject *)the0 { return QTRDFSubject.values[@"0"]; }
-
-+ (instancetype _Nullable)withValue:(NSString *)value
-{
-    return QTRDFSubject.values[value];
-}
-
-- (instancetype)initWithValue:(NSString *)value
-{
-    if (self = [super init]) _value = value;
-    return self;
-}
-
-- (NSUInteger)hash { return _value.hash; }
-@end
-
 @implementation QTFieldType
 + (NSDictionary<NSString *, QTFieldType *> *)values
 {
@@ -342,31 +307,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype _Nullable)withValue:(NSString *)value
 {
     return QTModifyingViewUid.values[value];
-}
-
-- (instancetype)initWithValue:(NSString *)value
-{
-    if (self = [super init]) _value = value;
-    return self;
-}
-
-- (NSUInteger)hash { return _value.hash; }
-@end
-
-@implementation QTOwnerFlag
-+ (NSDictionary<NSString *, QTOwnerFlag *> *)values
-{
-    static NSDictionary<NSString *, QTOwnerFlag *> *values;
-    return values = values ? values : @{
-        @"organizationMember": [[QTOwnerFlag alloc] initWithValue:@"organizationMember"],
-    };
-}
-
-+ (QTOwnerFlag *)organizationMember { return QTOwnerFlag.values[@"organizationMember"]; }
-
-+ (instancetype _Nullable)withValue:(NSString *)value
-{
-    return QTOwnerFlag.values[value];
 }
 
 - (instancetype)initWithValue:(NSString *)value
@@ -717,7 +657,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTConsumerComplaint.properties[key]];
+    id resolved = QTConsumerComplaint.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -784,7 +725,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTGrant.properties[key]];
+    id resolved = QTGrant.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -836,7 +778,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     if (self = [super init]) {
         [self setValuesForKeysWithDictionary:dict];
         _jsonQuery = [QTJSONQuery fromJSONDictionary:(id)_jsonQuery];
-        _rdfSubject = [QTRDFSubject withValue:(id)_rdfSubject];
         _availableDisplayTypes = map(_availableDisplayTypes, λ(id x, [QTAvailableDisplayType withValue:x]));
         _renderTypeConfig = [QTRenderTypeConfig fromJSONDictionary:(id)_renderTypeConfig];
         _richRendererConfigs = [QTRichRendererConfigs fromJSONDictionary:(id)_richRendererConfigs];
@@ -847,7 +788,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTMetadata.properties[key]];
+    id resolved = QTMetadata.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -864,7 +806,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
     [dict addEntriesFromDictionary:@{
         @"jsonQuery": NSNullify([_jsonQuery JSONDictionary]),
-        @"rdfSubject": NSNullify([_rdfSubject value]),
         @"availableDisplayTypes": map(_availableDisplayTypes, λ(id x, [x value])),
         @"renderTypeConfig": [_renderTypeConfig JSONDictionary],
         @"richRendererConfigs": NSNullify([_richRendererConfigs JSONDictionary]),
@@ -900,7 +841,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTCustomFields.properties[key]];
+    id resolved = QTCustomFields.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -947,7 +889,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTTest.properties[key]];
+    id resolved = QTTest.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -972,8 +915,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     static NSDictionary<NSString *, NSString *> *properties;
     return properties = properties ? properties : @{
         @"order": @"order",
-        @"select": @"select",
-        @"group": @"group",
     };
 }
 
@@ -987,8 +928,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     if (self = [super init]) {
         [self setValuesForKeysWithDictionary:dict];
         _order = map(_order, λ(id x, [QTOrder fromJSONDictionary:x]));
-        _select = map(_select, λ(id x, [QTSelect fromJSONDictionary:x]));
-        _group = map(_group, λ(id x, [QTGroup fromJSONDictionary:x]));
     }
     return self;
 }
@@ -998,40 +937,10 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     id dict = [[self dictionaryWithValuesForKeys:QTJSONQuery.properties.allValues] mutableCopy];
 
     [dict addEntriesFromDictionary:@{
-        @"order": NSNullify(map(_order, λ(id x, [x JSONDictionary]))),
-        @"select": NSNullify(map(_select, λ(id x, [x JSONDictionary]))),
-        @"group": NSNullify(map(_group, λ(id x, [x JSONDictionary]))),
+        @"order": map(_order, λ(id x, [x JSONDictionary])),
     }];
 
     return dict;
-}
-@end
-
-@implementation QTGroup
-+ (NSDictionary<NSString *, NSString *> *)properties
-{
-    static NSDictionary<NSString *, NSString *> *properties;
-    return properties = properties ? properties : @{
-        @"columnFieldName": @"columnFieldName",
-    };
-}
-
-+ (instancetype)fromJSONDictionary:(NSDictionary *)dict
-{
-    return dict ? [[QTGroup alloc] initWithJSONDictionary:dict] : nil;
-}
-
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict
-{
-    if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
-    }
-    return self;
-}
-
-- (NSDictionary *)JSONDictionary
-{
-    return [self dictionaryWithValuesForKeys:QTGroup.properties.allValues];
 }
 @end
 
@@ -1060,7 +969,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTOrder.properties[key]];
+    id resolved = QTOrder.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -1080,35 +990,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     }];
 
     return dict;
-}
-@end
-
-@implementation QTSelect
-+ (NSDictionary<NSString *, NSString *> *)properties
-{
-    static NSDictionary<NSString *, NSString *> *properties;
-    return properties = properties ? properties : @{
-        @"columnFieldName": @"columnFieldName",
-        @"aggregate": @"aggregate",
-    };
-}
-
-+ (instancetype)fromJSONDictionary:(NSDictionary *)dict
-{
-    return dict ? [[QTSelect alloc] initWithJSONDictionary:dict] : nil;
-}
-
-- (instancetype)initWithJSONDictionary:(NSDictionary *)dict
-{
-    if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
-    }
-    return self;
-}
-
-- (NSDictionary *)JSONDictionary
-{
-    return [self dictionaryWithValuesForKeys:QTSelect.properties.allValues];
 }
 @end
 
@@ -1345,7 +1226,8 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTField.properties[key]];
+    id resolved = QTField.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -1412,7 +1294,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
         @"displayName": @"displayName",
         @"screenName": @"screenName",
         @"type": @"type",
-        @"flags": @"flags",
         @"profileImageUrlLarge": @"profileImageURLLarge",
         @"profileImageUrlMedium": @"profileImageURLMedium",
         @"profileImageUrlSmall": @"profileImageURLSmall",
@@ -1429,14 +1310,14 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
     if (self = [super init]) {
         [self setValuesForKeysWithDictionary:dict];
         _type = [QTOwnerType withValue:(id)_type];
-        _flags = map(_flags, λ(id x, [QTOwnerFlag withValue:x]));
     }
     return self;
 }
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTOwner.properties[key]];
+    id resolved = QTOwner.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -1453,7 +1334,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
 
     [dict addEntriesFromDictionary:@{
         @"type": [_type value],
-        @"flags": NSNullify(map(_flags, λ(id x, [x value]))),
     }];
 
     return dict;
@@ -1497,7 +1377,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
         @"displayName": @"displayName",
         @"screenName": @"screenName",
         @"type": @"type",
-        @"flags": @"flags",
     };
 }
 
@@ -1514,14 +1393,14 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
         _displayName = [QTName withValue:(id)_displayName];
         _screenName = [QTName withValue:(id)_screenName];
         _type = [QTOwnerType withValue:(id)_type];
-        _flags = map(_flags, λ(id x, [QTOwnerFlag withValue:x]));
     }
     return self;
 }
 
 - (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-    [super setValue:value forKey:QTTableAuthor.properties[key]];
+    id resolved = QTTableAuthor.properties[key];
+    if (resolved) [super setValue:value forKey:resolved];
 }
 
 - (NSDictionary *)JSONDictionary
@@ -1541,7 +1420,6 @@ NSString *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints *consumerCom
         @"displayName": [_displayName value],
         @"screenName": [_screenName value],
         @"type": [_type value],
-        @"flags": NSNullify(map(_flags, λ(id x, [x value]))),
     }];
 
     return dict;

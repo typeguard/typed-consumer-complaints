@@ -8,7 +8,6 @@ namespace QuickType
 {
     using System;
     using System.Collections.Generic;
-    using System.Net;
 
     using System.Globalization;
     using Newtonsoft.Json;
@@ -43,7 +42,7 @@ namespace QuickType
         [JsonProperty("hideFromDataJson")]
         public bool HideFromDataJson { get; set; }
 
-        [JsonProperty("indexUpdatedAt")]
+        [JsonProperty("indexUpdatedAt", NullValueHandling = NullValueHandling.Ignore)]
         public long? IndexUpdatedAt { get; set; }
 
         [JsonProperty("newBackend")]
@@ -70,7 +69,7 @@ namespace QuickType
         [JsonProperty("publicationStage")]
         public PublicationStage PublicationStage { get; set; }
 
-        [JsonProperty("rowClass")]
+        [JsonProperty("rowClass", NullValueHandling = NullValueHandling.Ignore)]
         public string RowClass { get; set; }
 
         [JsonProperty("rowsUpdatedAt")]
@@ -103,7 +102,7 @@ namespace QuickType
         [JsonProperty("owner")]
         public Owner Owner { get; set; }
 
-        [JsonProperty("ratings")]
+        [JsonProperty("ratings", NullValueHandling = NullValueHandling.Ignore)]
         public Ratings Ratings { get; set; }
 
         [JsonProperty("rights")]
@@ -112,19 +111,19 @@ namespace QuickType
         [JsonProperty("tableAuthor")]
         public TableAuthor TableAuthor { get; set; }
 
-        [JsonProperty("flags")]
+        [JsonProperty("flags", NullValueHandling = NullValueHandling.Ignore)]
         public ConsumerComplaintFlag[] Flags { get; set; }
 
-        [JsonProperty("moderationStatus")]
+        [JsonProperty("moderationStatus", NullValueHandling = NullValueHandling.Ignore)]
         public bool? ModerationStatus { get; set; }
 
-        [JsonProperty("category")]
+        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
         public string Category { get; set; }
 
-        [JsonProperty("tags")]
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
         public string[] Tags { get; set; }
 
-        [JsonProperty("modifyingViewUid")]
+        [JsonProperty("modifyingViewUid", NullValueHandling = NullValueHandling.Ignore)]
         public ModifyingViewUid? ModifyingViewUid { get; set; }
     }
 
@@ -142,31 +141,33 @@ namespace QuickType
 
     public partial class Metadata
     {
-        [JsonProperty("jsonQuery")]
+        [JsonProperty("jsonQuery", NullValueHandling = NullValueHandling.Ignore)]
         public JsonQuery JsonQuery { get; set; }
 
-        [JsonProperty("rdfSubject")]
-        public RdfSubject? RdfSubject { get; set; }
+        [JsonProperty("rdfSubject", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long? RdfSubject { get; set; }
 
-        [JsonProperty("rdfClass")]
+        [JsonProperty("rdfClass", NullValueHandling = NullValueHandling.Ignore)]
         public string RdfClass { get; set; }
 
-        [JsonProperty("rowIdentifier")]
-        public string RowIdentifier { get; set; }
+        [JsonProperty("rowIdentifier", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(ParseStringConverter))]
+        public long? RowIdentifier { get; set; }
 
         [JsonProperty("availableDisplayTypes")]
         public AvailableDisplayType[] AvailableDisplayTypes { get; set; }
 
-        [JsonProperty("rowLabel")]
+        [JsonProperty("rowLabel", NullValueHandling = NullValueHandling.Ignore)]
         public string RowLabel { get; set; }
 
         [JsonProperty("renderTypeConfig")]
         public RenderTypeConfig RenderTypeConfig { get; set; }
 
-        [JsonProperty("richRendererConfigs")]
+        [JsonProperty("richRendererConfigs", NullValueHandling = NullValueHandling.Ignore)]
         public RichRendererConfigs RichRendererConfigs { get; set; }
 
-        [JsonProperty("custom_fields")]
+        [JsonProperty("custom_fields", NullValueHandling = NullValueHandling.Ignore)]
         public CustomFields CustomFields { get; set; }
     }
 
@@ -186,18 +187,6 @@ namespace QuickType
     {
         [JsonProperty("order")]
         public Order[] Order { get; set; }
-
-        [JsonProperty("select")]
-        public Select[] Select { get; set; }
-
-        [JsonProperty("group")]
-        public Group[] Group { get; set; }
-    }
-
-    public partial class Group
-    {
-        [JsonProperty("columnFieldName")]
-        public string ColumnFieldName { get; set; }
     }
 
     public partial class Order
@@ -209,15 +198,6 @@ namespace QuickType
         public string ColumnFieldName { get; set; }
     }
 
-    public partial class Select
-    {
-        [JsonProperty("columnFieldName")]
-        public string ColumnFieldName { get; set; }
-
-        [JsonProperty("aggregate")]
-        public string Aggregate { get; set; }
-    }
-
     public partial class RenderTypeConfig
     {
         [JsonProperty("visible")]
@@ -226,10 +206,10 @@ namespace QuickType
 
     public partial class Visible
     {
-        [JsonProperty("table")]
+        [JsonProperty("table", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Table { get; set; }
 
-        [JsonProperty("fatrow")]
+        [JsonProperty("fatrow", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Fatrow { get; set; }
     }
 
@@ -289,16 +269,13 @@ namespace QuickType
         [JsonProperty("type")]
         public OwnerType Type { get; set; }
 
-        [JsonProperty("flags")]
-        public OwnerFlag[] Flags { get; set; }
-
-        [JsonProperty("profileImageUrlLarge")]
+        [JsonProperty("profileImageUrlLarge", NullValueHandling = NullValueHandling.Ignore)]
         public string ProfileImageUrlLarge { get; set; }
 
-        [JsonProperty("profileImageUrlMedium")]
+        [JsonProperty("profileImageUrlMedium", NullValueHandling = NullValueHandling.Ignore)]
         public string ProfileImageUrlMedium { get; set; }
 
-        [JsonProperty("profileImageUrlSmall")]
+        [JsonProperty("profileImageUrlSmall", NullValueHandling = NullValueHandling.Ignore)]
         public string ProfileImageUrlSmall { get; set; }
     }
 
@@ -321,9 +298,6 @@ namespace QuickType
 
         [JsonProperty("type")]
         public OwnerType Type { get; set; }
-
-        [JsonProperty("flags")]
-        public OwnerFlag[] Flags { get; set; }
     }
 
     public enum DisplayType { Fatrow, Table };
@@ -336,15 +310,11 @@ namespace QuickType
 
     public enum AvailableDisplayType { Fatrow, Page, Table };
 
-    public enum RdfSubject { The0 };
-
     public enum FieldType { ColumnData, ColumnLabel };
 
     public enum Width { The27, The30, The31, The33, The40 };
 
     public enum ModifyingViewUid { S6EwH6Mp };
-
-    public enum OwnerFlag { OrganizationMember };
 
     public enum OwnerType { Interactive };
 
@@ -367,795 +337,722 @@ namespace QuickType
         public static ConsumerComplaints[] FromJson(string json) => JsonConvert.DeserializeObject<ConsumerComplaints[]>(json, QuickType.Converter.Settings);
     }
 
-    static class DisplayTypeExtensions
-    {
-        public static DisplayType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "fatrow": return DisplayType.Fatrow;
-                case "table": return DisplayType.Table;
-                default: return null;
-            }
-        }
-
-        public static DisplayType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this DisplayType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case DisplayType.Fatrow: serializer.Serialize(writer, "fatrow"); break;
-                case DisplayType.Table: serializer.Serialize(writer, "table"); break;
-            }
-        }
-    }
-
-    static class ConsumerComplaintFlagExtensions
-    {
-        public static ConsumerComplaintFlag? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "default": return ConsumerComplaintFlag.Default;
-                case "restorable": return ConsumerComplaintFlag.Restorable;
-                case "restorePossibleForType": return ConsumerComplaintFlag.RestorePossibleForType;
-                default: return null;
-            }
-        }
-
-        public static ConsumerComplaintFlag ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this ConsumerComplaintFlag value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case ConsumerComplaintFlag.Default: serializer.Serialize(writer, "default"); break;
-                case ConsumerComplaintFlag.Restorable: serializer.Serialize(writer, "restorable"); break;
-                case ConsumerComplaintFlag.RestorePossibleForType: serializer.Serialize(writer, "restorePossibleForType"); break;
-            }
-        }
-    }
-
-    static class GrantFlagExtensions
-    {
-        public static GrantFlag? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "public": return GrantFlag.Public;
-                default: return null;
-            }
-        }
-
-        public static GrantFlag ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this GrantFlag value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case GrantFlag.Public: serializer.Serialize(writer, "public"); break;
-            }
-        }
-    }
-
-    static class GrantTypeExtensions
-    {
-        public static GrantType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "viewer": return GrantType.Viewer;
-                default: return null;
-            }
-        }
-
-        public static GrantType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this GrantType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case GrantType.Viewer: serializer.Serialize(writer, "viewer"); break;
-            }
-        }
-    }
-
-    static class AvailableDisplayTypeExtensions
-    {
-        public static AvailableDisplayType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "fatrow": return AvailableDisplayType.Fatrow;
-                case "page": return AvailableDisplayType.Page;
-                case "table": return AvailableDisplayType.Table;
-                default: return null;
-            }
-        }
-
-        public static AvailableDisplayType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this AvailableDisplayType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case AvailableDisplayType.Fatrow: serializer.Serialize(writer, "fatrow"); break;
-                case AvailableDisplayType.Page: serializer.Serialize(writer, "page"); break;
-                case AvailableDisplayType.Table: serializer.Serialize(writer, "table"); break;
-            }
-        }
-    }
-
-    static class RdfSubjectExtensions
-    {
-        public static RdfSubject? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "0": return RdfSubject.The0;
-                default: return null;
-            }
-        }
-
-        public static RdfSubject ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this RdfSubject value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case RdfSubject.The0: serializer.Serialize(writer, "0"); break;
-            }
-        }
-    }
-
-    static class FieldTypeExtensions
-    {
-        public static FieldType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "columnData": return FieldType.ColumnData;
-                case "columnLabel": return FieldType.ColumnLabel;
-                default: return null;
-            }
-        }
-
-        public static FieldType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this FieldType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case FieldType.ColumnData: serializer.Serialize(writer, "columnData"); break;
-                case FieldType.ColumnLabel: serializer.Serialize(writer, "columnLabel"); break;
-            }
-        }
-    }
-
-    static class WidthExtensions
-    {
-        public static Width? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "27%": return Width.The27;
-                case "30%": return Width.The30;
-                case "31%": return Width.The31;
-                case "33%": return Width.The33;
-                case "40%": return Width.The40;
-                default: return null;
-            }
-        }
-
-        public static Width ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Width value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Width.The27: serializer.Serialize(writer, "27%"); break;
-                case Width.The30: serializer.Serialize(writer, "30%"); break;
-                case Width.The31: serializer.Serialize(writer, "31%"); break;
-                case Width.The33: serializer.Serialize(writer, "33%"); break;
-                case Width.The40: serializer.Serialize(writer, "40%"); break;
-            }
-        }
-    }
-
-    static class ModifyingViewUidExtensions
-    {
-        public static ModifyingViewUid? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "s6ew-h6mp": return ModifyingViewUid.S6EwH6Mp;
-                default: return null;
-            }
-        }
-
-        public static ModifyingViewUid ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this ModifyingViewUid value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case ModifyingViewUid.S6EwH6Mp: serializer.Serialize(writer, "s6ew-h6mp"); break;
-            }
-        }
-    }
-
-    static class OwnerFlagExtensions
-    {
-        public static OwnerFlag? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "organizationMember": return OwnerFlag.OrganizationMember;
-                default: return null;
-            }
-        }
-
-        public static OwnerFlag ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this OwnerFlag value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case OwnerFlag.OrganizationMember: serializer.Serialize(writer, "organizationMember"); break;
-            }
-        }
-    }
-
-    static class OwnerTypeExtensions
-    {
-        public static OwnerType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "interactive": return OwnerType.Interactive;
-                default: return null;
-            }
-        }
-
-        public static OwnerType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this OwnerType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case OwnerType.Interactive: serializer.Serialize(writer, "interactive"); break;
-            }
-        }
-    }
-
-    static class ProvenanceExtensions
-    {
-        public static Provenance? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "official": return Provenance.Official;
-                default: return null;
-            }
-        }
-
-        public static Provenance ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Provenance value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Provenance.Official: serializer.Serialize(writer, "official"); break;
-            }
-        }
-    }
-
-    static class PublicationStageExtensions
-    {
-        public static PublicationStage? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "published": return PublicationStage.Published;
-                default: return null;
-            }
-        }
-
-        public static PublicationStage ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this PublicationStage value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case PublicationStage.Published: serializer.Serialize(writer, "published"); break;
-            }
-        }
-    }
-
-    static class RightExtensions
-    {
-        public static Right? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "read": return Right.Read;
-                default: return null;
-            }
-        }
-
-        public static Right ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Right value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Right.Read: serializer.Serialize(writer, "read"); break;
-            }
-        }
-    }
-
-    static class RowsUpdatedByExtensions
-    {
-        public static RowsUpdatedBy? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "pjxg-ve4m": return RowsUpdatedBy.PjxgVe4M;
-                case "54a3-qyun": return RowsUpdatedBy.The54A3Qyun;
-                case "9e3m-2843": return RowsUpdatedBy.The9E3M2843;
-                case "vvca-fr6g": return RowsUpdatedBy.VvcaFr6G;
-                default: return null;
-            }
-        }
-
-        public static RowsUpdatedBy ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this RowsUpdatedBy value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case RowsUpdatedBy.PjxgVe4M: serializer.Serialize(writer, "pjxg-ve4m"); break;
-                case RowsUpdatedBy.The54A3Qyun: serializer.Serialize(writer, "54a3-qyun"); break;
-                case RowsUpdatedBy.The9E3M2843: serializer.Serialize(writer, "9e3m-2843"); break;
-                case RowsUpdatedBy.VvcaFr6G: serializer.Serialize(writer, "vvca-fr6g"); break;
-            }
-        }
-    }
-
-    static class NameExtensions
-    {
-        public static Name? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "Dan Munz": return Name.DanMunz;
-                case "Doug Taylor": return Name.DougTaylor;
-                case "ming": return Name.Ming;
-                case "Shannon Files": return Name.ShannonFiles;
-                default: return null;
-            }
-        }
-
-        public static Name ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Name value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Name.DanMunz: serializer.Serialize(writer, "Dan Munz"); break;
-                case Name.DougTaylor: serializer.Serialize(writer, "Doug Taylor"); break;
-                case Name.Ming: serializer.Serialize(writer, "ming"); break;
-                case Name.ShannonFiles: serializer.Serialize(writer, "Shannon Files"); break;
-            }
-        }
-    }
-
-    static class IdExtensions
-    {
-        public static Id? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "pjxg-ve4m": return Id.PjxgVe4M;
-                case "54a3-qyun": return Id.The54A3Qyun;
-                case "9e3m-2843": return Id.The9E3M2843;
-                case "9eki-h2hn": return Id.The9EkiH2Hn;
-                default: return null;
-            }
-        }
-
-        public static Id ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this Id value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case Id.PjxgVe4M: serializer.Serialize(writer, "pjxg-ve4m"); break;
-                case Id.The54A3Qyun: serializer.Serialize(writer, "54a3-qyun"); break;
-                case Id.The9E3M2843: serializer.Serialize(writer, "9e3m-2843"); break;
-                case Id.The9EkiH2Hn: serializer.Serialize(writer, "9eki-h2hn"); break;
-            }
-        }
-    }
-
-    static class ViewTypeExtensions
-    {
-        public static ViewType? ValueForString(string str)
-        {
-            switch (str)
-            {
-                case "tabular": return ViewType.Tabular;
-                default: return null;
-            }
-        }
-
-        public static ViewType ReadJson(JsonReader reader, JsonSerializer serializer)
-        {
-            var str = serializer.Deserialize<string>(reader);
-            var maybeValue = ValueForString(str);
-            if (maybeValue.HasValue) return maybeValue.Value;
-            throw new Exception("Unknown enum case " + str);
-        }
-
-        public static void WriteJson(this ViewType value, JsonWriter writer, JsonSerializer serializer)
-        {
-            switch (value)
-            {
-                case ViewType.Tabular: serializer.Serialize(writer, "tabular"); break;
-            }
-        }
-    }
-
     public static class Serialize
     {
         public static string ToJson(this ConsumerComplaints[] self) => JsonConvert.SerializeObject(self, QuickType.Converter.Settings);
     }
 
-    internal class Converter: JsonConverter
+    internal static class Converter
     {
-        public override bool CanConvert(Type t) => t == typeof(DisplayType) || t == typeof(ConsumerComplaintFlag) || t == typeof(GrantFlag) || t == typeof(GrantType) || t == typeof(AvailableDisplayType) || t == typeof(RdfSubject) || t == typeof(FieldType) || t == typeof(Width) || t == typeof(ModifyingViewUid) || t == typeof(OwnerFlag) || t == typeof(OwnerType) || t == typeof(Provenance) || t == typeof(PublicationStage) || t == typeof(Right) || t == typeof(RowsUpdatedBy) || t == typeof(Name) || t == typeof(Id) || t == typeof(ViewType) || t == typeof(DisplayType?) || t == typeof(ConsumerComplaintFlag?) || t == typeof(GrantFlag?) || t == typeof(GrantType?) || t == typeof(AvailableDisplayType?) || t == typeof(RdfSubject?) || t == typeof(FieldType?) || t == typeof(Width?) || t == typeof(ModifyingViewUid?) || t == typeof(OwnerFlag?) || t == typeof(OwnerType?) || t == typeof(Provenance?) || t == typeof(PublicationStage?) || t == typeof(Right?) || t == typeof(RowsUpdatedBy?) || t == typeof(Name?) || t == typeof(Id?) || t == typeof(ViewType?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (t == typeof(DisplayType))
-                return DisplayTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(ConsumerComplaintFlag))
-                return ConsumerComplaintFlagExtensions.ReadJson(reader, serializer);
-            if (t == typeof(GrantFlag))
-                return GrantFlagExtensions.ReadJson(reader, serializer);
-            if (t == typeof(GrantType))
-                return GrantTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(AvailableDisplayType))
-                return AvailableDisplayTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(RdfSubject))
-                return RdfSubjectExtensions.ReadJson(reader, serializer);
-            if (t == typeof(FieldType))
-                return FieldTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Width))
-                return WidthExtensions.ReadJson(reader, serializer);
-            if (t == typeof(ModifyingViewUid))
-                return ModifyingViewUidExtensions.ReadJson(reader, serializer);
-            if (t == typeof(OwnerFlag))
-                return OwnerFlagExtensions.ReadJson(reader, serializer);
-            if (t == typeof(OwnerType))
-                return OwnerTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Provenance))
-                return ProvenanceExtensions.ReadJson(reader, serializer);
-            if (t == typeof(PublicationStage))
-                return PublicationStageExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Right))
-                return RightExtensions.ReadJson(reader, serializer);
-            if (t == typeof(RowsUpdatedBy))
-                return RowsUpdatedByExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Name))
-                return NameExtensions.ReadJson(reader, serializer);
-            if (t == typeof(Id))
-                return IdExtensions.ReadJson(reader, serializer);
-            if (t == typeof(ViewType))
-                return ViewTypeExtensions.ReadJson(reader, serializer);
-            if (t == typeof(DisplayType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return DisplayTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(ConsumerComplaintFlag?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return ConsumerComplaintFlagExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(GrantFlag?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return GrantFlagExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(GrantType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return GrantTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(AvailableDisplayType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return AvailableDisplayTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(RdfSubject?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return RdfSubjectExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(FieldType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return FieldTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(Width?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return WidthExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(ModifyingViewUid?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return ModifyingViewUidExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(OwnerFlag?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return OwnerFlagExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(OwnerType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return OwnerTypeExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(Provenance?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return ProvenanceExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(PublicationStage?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return PublicationStageExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(Right?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return RightExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(RowsUpdatedBy?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return RowsUpdatedByExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(Name?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return NameExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(Id?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return IdExtensions.ReadJson(reader, serializer);
-            }
-            if (t == typeof(ViewType?))
-            {
-                if (reader.TokenType == JsonToken.Null) return null;
-                return ViewTypeExtensions.ReadJson(reader, serializer);
-            }
-            throw new Exception("Unknown type");
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            var t = value.GetType();
-            if (t == typeof(DisplayType))
-            {
-                ((DisplayType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(ConsumerComplaintFlag))
-            {
-                ((ConsumerComplaintFlag)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(GrantFlag))
-            {
-                ((GrantFlag)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(GrantType))
-            {
-                ((GrantType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(AvailableDisplayType))
-            {
-                ((AvailableDisplayType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(RdfSubject))
-            {
-                ((RdfSubject)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(FieldType))
-            {
-                ((FieldType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(Width))
-            {
-                ((Width)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(ModifyingViewUid))
-            {
-                ((ModifyingViewUid)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(OwnerFlag))
-            {
-                ((OwnerFlag)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(OwnerType))
-            {
-                ((OwnerType)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(Provenance))
-            {
-                ((Provenance)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(PublicationStage))
-            {
-                ((PublicationStage)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(Right))
-            {
-                ((Right)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(RowsUpdatedBy))
-            {
-                ((RowsUpdatedBy)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(Name))
-            {
-                ((Name)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(Id))
-            {
-                ((Id)value).WriteJson(writer, serializer);
-                return;
-            }
-            if (t == typeof(ViewType))
-            {
-                ((ViewType)value).WriteJson(writer, serializer);
-                return;
-            }
-            throw new Exception("Unknown type");
-        }
-
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             DateParseHandling = DateParseHandling.None,
-            Converters = { 
-                new Converter(),
-                new IsoDateTimeConverter()
-                {
-                    DateTimeStyles = DateTimeStyles.AssumeUniversal,
-                },
+            Converters = {
+                DisplayTypeConverter.Singleton,
+                ConsumerComplaintFlagConverter.Singleton,
+                GrantFlagConverter.Singleton,
+                GrantTypeConverter.Singleton,
+                AvailableDisplayTypeConverter.Singleton,
+                FieldTypeConverter.Singleton,
+                WidthConverter.Singleton,
+                ModifyingViewUidConverter.Singleton,
+                OwnerTypeConverter.Singleton,
+                ProvenanceConverter.Singleton,
+                PublicationStageConverter.Singleton,
+                RightConverter.Singleton,
+                RowsUpdatedByConverter.Singleton,
+                NameConverter.Singleton,
+                IdConverter.Singleton,
+                ViewTypeConverter.Singleton,
+                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
+    }
+
+    internal class DisplayTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(DisplayType) || t == typeof(DisplayType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "fatrow":
+                    return DisplayType.Fatrow;
+                case "table":
+                    return DisplayType.Table;
+            }
+            throw new Exception("Cannot unmarshal type DisplayType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (DisplayType)untypedValue;
+            switch (value)
+            {
+                case DisplayType.Fatrow:
+                    serializer.Serialize(writer, "fatrow");
+                    return;
+                case DisplayType.Table:
+                    serializer.Serialize(writer, "table");
+                    return;
+            }
+            throw new Exception("Cannot marshal type DisplayType");
+        }
+
+        public static readonly DisplayTypeConverter Singleton = new DisplayTypeConverter();
+    }
+
+    internal class ConsumerComplaintFlagConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(ConsumerComplaintFlag) || t == typeof(ConsumerComplaintFlag?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "default":
+                    return ConsumerComplaintFlag.Default;
+                case "restorable":
+                    return ConsumerComplaintFlag.Restorable;
+                case "restorePossibleForType":
+                    return ConsumerComplaintFlag.RestorePossibleForType;
+            }
+            throw new Exception("Cannot unmarshal type ConsumerComplaintFlag");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (ConsumerComplaintFlag)untypedValue;
+            switch (value)
+            {
+                case ConsumerComplaintFlag.Default:
+                    serializer.Serialize(writer, "default");
+                    return;
+                case ConsumerComplaintFlag.Restorable:
+                    serializer.Serialize(writer, "restorable");
+                    return;
+                case ConsumerComplaintFlag.RestorePossibleForType:
+                    serializer.Serialize(writer, "restorePossibleForType");
+                    return;
+            }
+            throw new Exception("Cannot marshal type ConsumerComplaintFlag");
+        }
+
+        public static readonly ConsumerComplaintFlagConverter Singleton = new ConsumerComplaintFlagConverter();
+    }
+
+    internal class GrantFlagConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(GrantFlag) || t == typeof(GrantFlag?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "public")
+            {
+                return GrantFlag.Public;
+            }
+            throw new Exception("Cannot unmarshal type GrantFlag");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (GrantFlag)untypedValue;
+            if (value == GrantFlag.Public)
+            {
+                serializer.Serialize(writer, "public");
+                return;
+            }
+            throw new Exception("Cannot marshal type GrantFlag");
+        }
+
+        public static readonly GrantFlagConverter Singleton = new GrantFlagConverter();
+    }
+
+    internal class GrantTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(GrantType) || t == typeof(GrantType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "viewer")
+            {
+                return GrantType.Viewer;
+            }
+            throw new Exception("Cannot unmarshal type GrantType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (GrantType)untypedValue;
+            if (value == GrantType.Viewer)
+            {
+                serializer.Serialize(writer, "viewer");
+                return;
+            }
+            throw new Exception("Cannot marshal type GrantType");
+        }
+
+        public static readonly GrantTypeConverter Singleton = new GrantTypeConverter();
+    }
+
+    internal class AvailableDisplayTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(AvailableDisplayType) || t == typeof(AvailableDisplayType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "fatrow":
+                    return AvailableDisplayType.Fatrow;
+                case "page":
+                    return AvailableDisplayType.Page;
+                case "table":
+                    return AvailableDisplayType.Table;
+            }
+            throw new Exception("Cannot unmarshal type AvailableDisplayType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (AvailableDisplayType)untypedValue;
+            switch (value)
+            {
+                case AvailableDisplayType.Fatrow:
+                    serializer.Serialize(writer, "fatrow");
+                    return;
+                case AvailableDisplayType.Page:
+                    serializer.Serialize(writer, "page");
+                    return;
+                case AvailableDisplayType.Table:
+                    serializer.Serialize(writer, "table");
+                    return;
+            }
+            throw new Exception("Cannot marshal type AvailableDisplayType");
+        }
+
+        public static readonly AvailableDisplayTypeConverter Singleton = new AvailableDisplayTypeConverter();
+    }
+
+    internal class ParseStringConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(long) || t == typeof(long?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            long l;
+            if (Int64.TryParse(value, out l))
+            {
+                return l;
+            }
+            throw new Exception("Cannot unmarshal type long");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (long)untypedValue;
+            serializer.Serialize(writer, value.ToString());
+            return;
+        }
+
+        public static readonly ParseStringConverter Singleton = new ParseStringConverter();
+    }
+
+    internal class FieldTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(FieldType) || t == typeof(FieldType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "columnData":
+                    return FieldType.ColumnData;
+                case "columnLabel":
+                    return FieldType.ColumnLabel;
+            }
+            throw new Exception("Cannot unmarshal type FieldType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (FieldType)untypedValue;
+            switch (value)
+            {
+                case FieldType.ColumnData:
+                    serializer.Serialize(writer, "columnData");
+                    return;
+                case FieldType.ColumnLabel:
+                    serializer.Serialize(writer, "columnLabel");
+                    return;
+            }
+            throw new Exception("Cannot marshal type FieldType");
+        }
+
+        public static readonly FieldTypeConverter Singleton = new FieldTypeConverter();
+    }
+
+    internal class WidthConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(Width) || t == typeof(Width?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "27%":
+                    return Width.The27;
+                case "30%":
+                    return Width.The30;
+                case "31%":
+                    return Width.The31;
+                case "33%":
+                    return Width.The33;
+                case "40%":
+                    return Width.The40;
+            }
+            throw new Exception("Cannot unmarshal type Width");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (Width)untypedValue;
+            switch (value)
+            {
+                case Width.The27:
+                    serializer.Serialize(writer, "27%");
+                    return;
+                case Width.The30:
+                    serializer.Serialize(writer, "30%");
+                    return;
+                case Width.The31:
+                    serializer.Serialize(writer, "31%");
+                    return;
+                case Width.The33:
+                    serializer.Serialize(writer, "33%");
+                    return;
+                case Width.The40:
+                    serializer.Serialize(writer, "40%");
+                    return;
+            }
+            throw new Exception("Cannot marshal type Width");
+        }
+
+        public static readonly WidthConverter Singleton = new WidthConverter();
+    }
+
+    internal class ModifyingViewUidConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(ModifyingViewUid) || t == typeof(ModifyingViewUid?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "s6ew-h6mp")
+            {
+                return ModifyingViewUid.S6EwH6Mp;
+            }
+            throw new Exception("Cannot unmarshal type ModifyingViewUid");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (ModifyingViewUid)untypedValue;
+            if (value == ModifyingViewUid.S6EwH6Mp)
+            {
+                serializer.Serialize(writer, "s6ew-h6mp");
+                return;
+            }
+            throw new Exception("Cannot marshal type ModifyingViewUid");
+        }
+
+        public static readonly ModifyingViewUidConverter Singleton = new ModifyingViewUidConverter();
+    }
+
+    internal class OwnerTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(OwnerType) || t == typeof(OwnerType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "interactive")
+            {
+                return OwnerType.Interactive;
+            }
+            throw new Exception("Cannot unmarshal type OwnerType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (OwnerType)untypedValue;
+            if (value == OwnerType.Interactive)
+            {
+                serializer.Serialize(writer, "interactive");
+                return;
+            }
+            throw new Exception("Cannot marshal type OwnerType");
+        }
+
+        public static readonly OwnerTypeConverter Singleton = new OwnerTypeConverter();
+    }
+
+    internal class ProvenanceConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(Provenance) || t == typeof(Provenance?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "official")
+            {
+                return Provenance.Official;
+            }
+            throw new Exception("Cannot unmarshal type Provenance");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (Provenance)untypedValue;
+            if (value == Provenance.Official)
+            {
+                serializer.Serialize(writer, "official");
+                return;
+            }
+            throw new Exception("Cannot marshal type Provenance");
+        }
+
+        public static readonly ProvenanceConverter Singleton = new ProvenanceConverter();
+    }
+
+    internal class PublicationStageConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(PublicationStage) || t == typeof(PublicationStage?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "published")
+            {
+                return PublicationStage.Published;
+            }
+            throw new Exception("Cannot unmarshal type PublicationStage");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (PublicationStage)untypedValue;
+            if (value == PublicationStage.Published)
+            {
+                serializer.Serialize(writer, "published");
+                return;
+            }
+            throw new Exception("Cannot marshal type PublicationStage");
+        }
+
+        public static readonly PublicationStageConverter Singleton = new PublicationStageConverter();
+    }
+
+    internal class RightConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(Right) || t == typeof(Right?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "read")
+            {
+                return Right.Read;
+            }
+            throw new Exception("Cannot unmarshal type Right");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (Right)untypedValue;
+            if (value == Right.Read)
+            {
+                serializer.Serialize(writer, "read");
+                return;
+            }
+            throw new Exception("Cannot marshal type Right");
+        }
+
+        public static readonly RightConverter Singleton = new RightConverter();
+    }
+
+    internal class RowsUpdatedByConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(RowsUpdatedBy) || t == typeof(RowsUpdatedBy?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "54a3-qyun":
+                    return RowsUpdatedBy.The54A3Qyun;
+                case "9e3m-2843":
+                    return RowsUpdatedBy.The9E3M2843;
+                case "pjxg-ve4m":
+                    return RowsUpdatedBy.PjxgVe4M;
+                case "vvca-fr6g":
+                    return RowsUpdatedBy.VvcaFr6G;
+            }
+            throw new Exception("Cannot unmarshal type RowsUpdatedBy");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (RowsUpdatedBy)untypedValue;
+            switch (value)
+            {
+                case RowsUpdatedBy.The54A3Qyun:
+                    serializer.Serialize(writer, "54a3-qyun");
+                    return;
+                case RowsUpdatedBy.The9E3M2843:
+                    serializer.Serialize(writer, "9e3m-2843");
+                    return;
+                case RowsUpdatedBy.PjxgVe4M:
+                    serializer.Serialize(writer, "pjxg-ve4m");
+                    return;
+                case RowsUpdatedBy.VvcaFr6G:
+                    serializer.Serialize(writer, "vvca-fr6g");
+                    return;
+            }
+            throw new Exception("Cannot marshal type RowsUpdatedBy");
+        }
+
+        public static readonly RowsUpdatedByConverter Singleton = new RowsUpdatedByConverter();
+    }
+
+    internal class NameConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(Name) || t == typeof(Name?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "Dan Munz":
+                    return Name.DanMunz;
+                case "Doug Taylor":
+                    return Name.DougTaylor;
+                case "Shannon Files":
+                    return Name.ShannonFiles;
+                case "ming":
+                    return Name.Ming;
+            }
+            throw new Exception("Cannot unmarshal type Name");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (Name)untypedValue;
+            switch (value)
+            {
+                case Name.DanMunz:
+                    serializer.Serialize(writer, "Dan Munz");
+                    return;
+                case Name.DougTaylor:
+                    serializer.Serialize(writer, "Doug Taylor");
+                    return;
+                case Name.ShannonFiles:
+                    serializer.Serialize(writer, "Shannon Files");
+                    return;
+                case Name.Ming:
+                    serializer.Serialize(writer, "ming");
+                    return;
+            }
+            throw new Exception("Cannot marshal type Name");
+        }
+
+        public static readonly NameConverter Singleton = new NameConverter();
+    }
+
+    internal class IdConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(Id) || t == typeof(Id?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            switch (value)
+            {
+                case "54a3-qyun":
+                    return Id.The54A3Qyun;
+                case "9e3m-2843":
+                    return Id.The9E3M2843;
+                case "9eki-h2hn":
+                    return Id.The9EkiH2Hn;
+                case "pjxg-ve4m":
+                    return Id.PjxgVe4M;
+            }
+            throw new Exception("Cannot unmarshal type Id");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (Id)untypedValue;
+            switch (value)
+            {
+                case Id.The54A3Qyun:
+                    serializer.Serialize(writer, "54a3-qyun");
+                    return;
+                case Id.The9E3M2843:
+                    serializer.Serialize(writer, "9e3m-2843");
+                    return;
+                case Id.The9EkiH2Hn:
+                    serializer.Serialize(writer, "9eki-h2hn");
+                    return;
+                case Id.PjxgVe4M:
+                    serializer.Serialize(writer, "pjxg-ve4m");
+                    return;
+            }
+            throw new Exception("Cannot marshal type Id");
+        }
+
+        public static readonly IdConverter Singleton = new IdConverter();
+    }
+
+    internal class ViewTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type t) => t == typeof(ViewType) || t == typeof(ViewType?);
+
+        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) return null;
+            var value = serializer.Deserialize<string>(reader);
+            if (value == "tabular")
+            {
+                return ViewType.Tabular;
+            }
+            throw new Exception("Cannot unmarshal type ViewType");
+        }
+
+        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
+        {
+            if (untypedValue == null)
+            {
+                serializer.Serialize(writer, null);
+                return;
+            }
+            var value = (ViewType)untypedValue;
+            if (value == ViewType.Tabular)
+            {
+                serializer.Serialize(writer, "tabular");
+                return;
+            }
+            throw new Exception("Cannot marshal type ViewType");
+        }
+
+        public static readonly ViewTypeConverter Singleton = new ViewTypeConverter();
     }
 }

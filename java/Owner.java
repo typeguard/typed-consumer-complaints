@@ -8,7 +8,6 @@ public class Owner {
     private String displayName;
     private String screenName;
     private OwnerType type;
-    private OwnerFlag[] flags;
     private String profileImageURLLarge;
     private String profileImageURLMedium;
     private String profileImageURLSmall;
@@ -32,11 +31,6 @@ public class Owner {
     public OwnerType getType() { return type; }
     @JsonProperty("type")
     public void setType(OwnerType value) { this.type = value; }
-
-    @JsonProperty("flags")
-    public OwnerFlag[] getFlags() { return flags; }
-    @JsonProperty("flags")
-    public void setFlags(OwnerFlag[] value) { this.flags = value; }
 
     @JsonProperty("profileImageUrlLarge")
     public String getProfileImageURLLarge() { return profileImageURLLarge; }

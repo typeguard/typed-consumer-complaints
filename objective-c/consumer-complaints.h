@@ -1,5 +1,5 @@
 // To parse this JSON:
-// 
+//
 //   NSError *error;
 //   QTConsumerComplaints *consumerComplaints = QTConsumerComplaintsFromJSON(json, NSUTF8Encoding, &error);
 
@@ -16,10 +16,7 @@
 @class QTCustomFields;
 @class QTTest;
 @class QTJSONQuery;
-@class QTGroup;
 @class QTOrder;
-@class QTSelect;
-@class QTRDFSubject;
 @class QTRenderTypeConfig;
 @class QTVisible;
 @class QTRichRendererConfigs;
@@ -32,7 +29,6 @@
 @class QTWidth;
 @class QTModifyingViewUid;
 @class QTOwner;
-@class QTOwnerFlag;
 @class QTOwnerType;
 @class QTProvenance;
 @class QTPublicationStage;
@@ -83,12 +79,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (QTAvailableDisplayType *)table;
 @end
 
-@interface QTRDFSubject : NSObject
-@property (nonatomic, readonly, copy) NSString *value;
-+ (instancetype _Nullable)withValue:(NSString *)value;
-+ (QTRDFSubject *)the0;
-@end
-
 @interface QTFieldType : NSObject
 @property (nonatomic, readonly, copy) NSString *value;
 + (instancetype _Nullable)withValue:(NSString *)value;
@@ -110,12 +100,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *value;
 + (instancetype _Nullable)withValue:(NSString *)value;
 + (QTModifyingViewUid *)s6EwH6Mp;
-@end
-
-@interface QTOwnerFlag : NSObject
-@property (nonatomic, readonly, copy) NSString *value;
-+ (instancetype _Nullable)withValue:(NSString *)value;
-+ (QTOwnerFlag *)organizationMember;
 @end
 
 @interface QTOwnerType : NSObject
@@ -234,7 +218,7 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 
 @interface QTMetadata : NSObject
 @property (nonatomic, nullable, strong) QTJSONQuery *jsonQuery;
-@property (nonatomic, nullable, assign) QTRDFSubject *rdfSubject;
+@property (nonatomic, nullable, copy)   NSString *rdfSubject;
 @property (nonatomic, nullable, copy)   NSString *rdfClass;
 @property (nonatomic, nullable, copy)   NSString *rowIdentifier;
 @property (nonatomic, copy)             NSArray<QTAvailableDisplayType *> *availableDisplayTypes;
@@ -253,23 +237,12 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 @end
 
 @interface QTJSONQuery : NSObject
-@property (nonatomic, nullable, copy) NSArray<QTOrder *> *order;
-@property (nonatomic, nullable, copy) NSArray<QTSelect *> *select;
-@property (nonatomic, nullable, copy) NSArray<QTGroup *> *group;
-@end
-
-@interface QTGroup : NSObject
-@property (nonatomic, copy) NSString *columnFieldName;
+@property (nonatomic, copy) NSArray<QTOrder *> *order;
 @end
 
 @interface QTOrder : NSObject
 @property (nonatomic, assign) BOOL isAscending;
 @property (nonatomic, copy)   NSString *columnFieldName;
-@end
-
-@interface QTSelect : NSObject
-@property (nonatomic, copy)           NSString *columnFieldName;
-@property (nonatomic, nullable, copy) NSString *aggregate;
 @end
 
 @interface QTRenderTypeConfig : NSObject
@@ -312,7 +285,6 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 @property (nonatomic, copy)           NSString *displayName;
 @property (nonatomic, copy)           NSString *screenName;
 @property (nonatomic, assign)         QTOwnerType *type;
-@property (nonatomic, nullable, copy) NSArray<QTOwnerFlag *> *flags;
 @property (nonatomic, nullable, copy) NSString *profileImageURLLarge;
 @property (nonatomic, nullable, copy) NSString *profileImageURLMedium;
 @property (nonatomic, nullable, copy) NSString *profileImageURLSmall;
@@ -323,11 +295,10 @@ NSString             *_Nullable QTConsumerComplaintsToJSON(QTConsumerComplaints 
 @end
 
 @interface QTTableAuthor : NSObject
-@property (nonatomic, assign)         QTID *identifier;
-@property (nonatomic, assign)         QTName *displayName;
-@property (nonatomic, assign)         QTName *screenName;
-@property (nonatomic, assign)         QTOwnerType *type;
-@property (nonatomic, nullable, copy) NSArray<QTOwnerFlag *> *flags;
+@property (nonatomic, assign) QTID *identifier;
+@property (nonatomic, assign) QTName *displayName;
+@property (nonatomic, assign) QTName *screenName;
+@property (nonatomic, assign) QTOwnerType *type;
 @end
 
 NS_ASSUME_NONNULL_END
